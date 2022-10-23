@@ -5,7 +5,7 @@ abstract class Player{
     private final String name;
     
     public Player(String name){
-        this.nanme = name;
+        this.name = name;
         this.objectCoins = 100;
         this.exp = 0;
         this.level = 1;
