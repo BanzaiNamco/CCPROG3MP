@@ -1,12 +1,12 @@
 package proto;
 
-public class Plot {
+public class Tile {
     private boolean isPlowed;
     private boolean hasRock;
     private boolean hasCrop;
 
     
-    public Plot(){
+    public Tile(){
         
     }
     public boolean getIsPlowed() {
