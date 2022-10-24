@@ -1,3 +1,5 @@
+package proto;
+
 abstract class Player{
     private int objectCoins;
     private double exp;

@@ -1,72 +1,91 @@
 package proto;
 
-public class Farmer extends Player{
-    private int bonusEarnings;
-    private int seedCostReduction;
-    private int plusWaterBonusLimit;
-    private int plusFertBonusLimit;
-    private String type;
+import java.util.ArrayList;
 
-    public Farmer(String name){
+public class Farmer extends Player{
+    private String farmer_type;
+    private int bonusEarn;
+    private int minusSeedCost;
+    private int bonusWater;
+    private int bonusFertilizer;
+    ArrayList<Tools> toolList;
+    Farm myFarm;
+
+    public Farmer(String name, Farm myFarm, ArrayList<Tools> toolList){
         super(name);
-        this.type = "Farmer";
-        this.bonusEarnings = 0;
-        this.seedCostReduction = 0;
-        this.plusWaterBonusLimit = 0;
-        this.plusFertBonusLimit = 0;
+        this.farmer_type = "Farmer";
+        this.bonusEarn = 0;
+        this.minusSeedCost = 0;
+        this.bonusWater = 0;
+        this.bonusFertilizer = 0;
+        this.toolList = new ArrayList<Tools>();
+        this.toolList = toolList;
+        this.myFarm = myFarm;
+    }
+    public void harvest(int i){
+        if(this.myFarm.canHarvest(i)){
+            this.gainExp(this.myFarm.getPlot(i).getSeed().getExpYield());
+            //earn money - harvestTotal
+            
+            this.myFarm.getPlot(i).resetTile();
+        }
     }
 
     public void Register(){
-        if(this.type.equals("Farmer")){
+        if(this.farmer_type.equals("Farmer")){
             if(this.getLevel() >= 5 && this.getObjectCoins() >= 200){
-                this.type = "Registered Farmer";
-                this.bonusEarnings = 1;
-                this.seedCostReduction = 1;
-                this.minusObjectCoins(200);
+                this.farmer_type = "Registered Farmer";
+                this.bonusEarn = 1;
+                this.minusSeedCost = 1;
+                this.useObjectCoins(200);
             }
             else{
                 //not high enough level
             }
         }
-        else if(this.type.equals("Registered Farmer")){
+        else if(this.farmer_type.equals("Registered Farmer")){
             if(this.getLevel() >= 10 && this.getObjectCoins() >= 300){
-                this.type = "Distinguished Farmer";
-                this.bonusEarnings = 2;
-                this.seedCostReduction = 2;
-                this.plusWaterBonusLimit = 1;
-                this.minusObjectCoins(300);
+                this.farmer_type = "Distinguished Farmer";
+                this.bonusEarn = 2;
+                this.minusSeedCost = 2;
+                this.bonusWater = 1;
+                this.useObjectCoins(300);
             }
             else{
                 //not allowed
             }
         }
-        else if(this.type.equals("Distinguished Farmer")){
+        else if(this.farmer_type.equals("Distinguished Farmer")){
             if(this.getLevel() >=15 && this.getObjectCoins() >= 400){
-                this.type = "Legendary Farmer";
-                this.bonusEarnings = 4;
-                this.seedCostReduction = 3;
-                this.plusWaterBonusLimit = 2;
-                this.plusFertBonusLimit = 1;
-                this.minusObjectCoins(400);
+                this.farmer_type = "Legendary Farmer";
+                this.bonusEarn = 4;
+                this.minusSeedCost = 3;
+                this.bonusWater = 2;
+                this.bonusFertilizer = 1;
+                this.useObjectCoins(400);
             }
         }
-        else if (this.type.equals("Legendary Farmer")){
+        else if (this.farmer_type.equals("Legendary Farmer")){
             //bro
         }
         else{
             //error
         }
     }
+    public String getFarmerType(){
+        return this.farmer_type;
+    }
     public int getBonusEarn(){
-        return this.bonusEarnings;
+        return this.bonusEarn;
     }
-    public int getPlusWaterBonusLimit(){
-        return this.plusWaterBonusLimit;
+    public int getMinusSeedcost(){
+        return this.minusSeedCost;
     }
-    public int getPlusFertBonusLimit(){
-        return this.plusFertBonusLimit;
+    public int getBonusWater(){
+        return this.bonusWater;
     }
-    public int getSeedCostReduction(){
-        return this.seedCostReduction;
+    public int getBonusFertilizer(){
+        return this.bonusFertilizer;
     }
+    //toollist and myfarm, not sure if getters needed
 }
