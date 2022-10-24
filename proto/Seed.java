@@ -2,6 +2,7 @@ package proto;
 
 public class Seed {
     private final String name;
+    private final String cropType;
     private int waterNeed;
     private int fertilizerNeed;
     private int waterLimit;
@@ -14,9 +15,10 @@ public class Seed {
     private double expYield;
 
 
-    public Seed(String name, int harvestTime, int waterNeed, int fertNeed, int prodMin, int prodMax,
+    public Seed(String name, String type, int harvestTime, int waterNeed, int fertNeed, int prodMin, int prodMax,
                     int cost, int bsp, double exp){
         this.name = name;
+        this.cropType = type;
         this.harvestTime = harvestTime;
         this.waterNeed = waterNeed;
         this.fertilizerNeed = fertNeed;
@@ -35,6 +37,9 @@ public class Seed {
     }
     public String getName(){
         return this.name;
+    }
+    public String getCropType(){
+        return this.cropType;
     }
     public int getCost(){
         return this.cost;

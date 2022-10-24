@@ -38,6 +38,10 @@ public class Tile {
         if(this.daysOccupied > this.seed.getHarvestTIme()){
             this.hasWither = true;
         }
+        else if(this.daysOccupied == this.seed.getHarvestTIme() && this.timesWatered < this.seed.getWaterNeed()
+                && this.timesAddedFertilizer < this.seed.getFertilizerNeed()){
+            this.hasWither = true;
+        }
     }
     
     public Seed getSeed(){

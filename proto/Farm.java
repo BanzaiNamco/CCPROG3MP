@@ -2,7 +2,7 @@ package proto;
 import java.util.ArrayList;
 
 public class Farm {
-    ArrayList<Tile> plots = new ArrayList<Tile>();
+    private ArrayList<Tile> plots = new ArrayList<Tile>();
     private int plotLength;
     private int plotWidth;
     private int plotSize;

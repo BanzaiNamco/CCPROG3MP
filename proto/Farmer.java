@@ -1,6 +1,7 @@
 package proto;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Farmer extends Player{
     private String farmer_type;
@@ -8,26 +9,53 @@ public class Farmer extends Player{
     private int minusSeedCost;
     private int bonusWater;
     private int bonusFertilizer;
-    ArrayList<Tools> toolList;
+    ArrayList<Tool> toolList;
     Farm myFarm;
 
-    public Farmer(String name, Farm myFarm, ArrayList<Tools> toolList){
+    public Farmer(String name, Farm myFarm, ArrayList<Tool> toolList){
         super(name);
         this.farmer_type = "Farmer";
         this.bonusEarn = 0;
         this.minusSeedCost = 0;
         this.bonusWater = 0;
         this.bonusFertilizer = 0;
-        this.toolList = new ArrayList<Tools>();
-        this.toolList = toolList;
+        this.toolList = new ArrayList<Tool>(toolList);
         this.myFarm = myFarm;
     }
     public void harvest(int i){
         if(this.myFarm.canHarvest(i)){
             this.gainExp(this.myFarm.getPlot(i).getSeed().getExpYield());
-            //earn money - harvestTotal
+            int harvestTotal = ThreadLocalRandom.current().nextInt(this.myFarm.getPlot(i).getSeed().getProduceMin(), 
+                                this.myFarm.getPlot(i).getSeed().getProduceMax() + 1);
             
+            double waterBonus = harvestTotal * 0.2 * (this.myFarm.getPlot(i).getTimesWatered() - 1);
+            double fertBonus = harvestTotal * 0.5 * this.myFarm.getPlot(i).getTimesAddedFertilizer();
+            harvestTotal += waterBonus + fertBonus;
+            if(this.myFarm.getPlot(i).getSeed().getCropType().equals("Flower")){
+                harvestTotal *= 1.1;
+            }
+            this.gainObjectCoins(harvestTotal);
             this.myFarm.getPlot(i).resetTile();
+        }
+    }
+    public void useTool(Tool tool, int i){
+        switch(tool.getName()){
+            case "Plow":
+                if(this.myFarm.canPlow(i)){
+                    this.myFarm.getPlot(i).setIsPlowed(true);
+                }
+            case "Watering Can":
+                if(this.myFarm.canWater(i) && (this.myFarm.getPlot(i).getTimesWatered() < this.bonusWater + this.myFarm.getPlot(i).getSeed().getWaterLimit())){
+                    this.myFarm.getPlot(i).addWater();
+                }
+            case "Fertilizer" :
+                if(this.myFarm.canFertilize(i) && (this.myFarm.getPlot(i).getTimesAddedFertilizer() < this.bonusFertilizer + this.myFarm.getPlot(i).getSeed().getFertilizerLimit())){
+                    this.myFarm.getPlot(i).addFert();
+                }
+            case "Pickaxe" :
+                //pick
+            case "Shovel" :
+                //shovel
         }
     }
 
