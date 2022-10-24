@@ -35,6 +35,8 @@ public class Seed {
         this.baseSellingPrice = bsp;
         this.expYield = exp;
     }
+    
+
     public String getName(){
         return this.name;
     }

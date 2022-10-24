@@ -15,57 +15,7 @@ public class Farm {
             plots.add(new Tile());
         }
     }
-    public boolean canHarvest(int i){
-        if(this.plots.get(i).getHasPlant() && !this.plots.get(i).getHasWithered()
-        && (this.plots.get(i).getDaysOccupied() == this.plots.get(i).getSeed().getHarvestTIme())){
-            return true;
-        }
-        return false;
-    }
-    public boolean canPlow(int i){
-        if(!this.plots.get(i).getIsPlowed() && !this.plots.get(i).getHasRock()){
-            return true;
-        }
-        return false;
-    }
-    public boolean canWater(int i){
-        if(this.plots.get(i).getHasPlant() && !this.plots.get(i).getHasWithered()
-            && this.plots.get(i).getIsPlowed()){
-            return true;
-        }
-        return false;
-    }
-    public boolean canFertilize(int i){
-        if(this.plots.get(i).getHasPlant() && !this.plots.get(i).getHasWithered()
-            && this.plots.get(i).getIsPlowed()){
-            return true;
-        }
-        return false;
-    }
-    public boolean canPickaxe(int i){
-        if(this.plots.get(i).getHasRock()){
-            return true;
-        }
-        return false;
-    }
-    public int canShovel(int i){
-        if(!this.plots.get(i).getIsPlowed() || this.plots.get(i).getHasRock()){
-            return 0;
-        }
-        else if(this.plots.get(i).getHasPlant() && !this.plots.get(i).getHasWithered()){
-            return 1;
-        }
-        else{
-            return 2;
-        }
-    }
-    public boolean canPlant(int i){
-        if(this.plots.get(i).getIsPlowed() && !this.plots.get(i).getHasPlant()
-            && !this.plots.get(i).getHasRock() && !this.plots.get(i).getHasWithered()){
-                return true;
-        }
-        return false;
-    }
+    
 
 
 

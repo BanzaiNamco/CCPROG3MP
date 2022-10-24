@@ -1,7 +1,6 @@
 package proto;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Farmer extends Player{
     private String farmer_type;
@@ -9,56 +8,64 @@ public class Farmer extends Player{
     private int minusSeedCost;
     private int bonusWater;
     private int bonusFertilizer;
-    ArrayList<Tool> toolList;
-    Farm myFarm;
+    ArrayList<Tile> myFarm;
+    ArrayList<Seed> seedDispensary;
 
-    public Farmer(String name, Farm myFarm, ArrayList<Tool> toolList){
+    public Farmer(String name, ArrayList<Tile> myFarm){
         super(name);
         this.farmer_type = "Farmer";
         this.bonusEarn = 0;
         this.minusSeedCost = 0;
         this.bonusWater = 0;
         this.bonusFertilizer = 0;
-        this.toolList = new ArrayList<Tool>(toolList);
-        this.myFarm = myFarm;
+        this.myFarm = new ArrayList<Tile>(myFarm);
+        this.seedDispensary = new ArrayList<Seed>();
     }
     public void harvest(int i){
-        if(this.myFarm.canHarvest(i)){
-            this.gainExp(this.myFarm.getPlot(i).getSeed().getExpYield());
-            int harvestTotal = ThreadLocalRandom.current().nextInt(this.myFarm.getPlot(i).getSeed().getProduceMin(), 
-                                this.myFarm.getPlot(i).getSeed().getProduceMax() + 1);
-            
-            double waterBonus = harvestTotal * 0.2 * (this.myFarm.getPlot(i).getTimesWatered() - 1);
-            double fertBonus = harvestTotal * 0.5 * this.myFarm.getPlot(i).getTimesAddedFertilizer();
-            harvestTotal += waterBonus + fertBonus;
-            if(this.myFarm.getPlot(i).getSeed().getCropType().equals("Flower")){
-                harvestTotal *= 1.1;
-            }
-            this.gainObjectCoins(harvestTotal);
-            this.myFarm.getPlot(i).resetTile();
-        }
+        
+        int harvestTotal = this.myFarm.get(i).getRandomProduce() * (this.myFarm.get(i).getSeedBSP() + this.bonusEarn);
+        harvestTotal += this.myFarm.get(i).getWaterBonus(harvestTotal) + this.myFarm.get(i).getFertilizerBonus(harvestTotal);
+
+        this.gainObjectCoins(harvestTotal);
+        this.gainExp(this.myFarm.get(i).getSeedExpYield());
+        this.myFarm.get(i).resetTile();
     }
     public void useTool(Tool tool, int i){
         switch(tool.getName()){
             case "Plow":
-                if(this.myFarm.canPlow(i)){
-                    this.myFarm.getPlot(i).setIsPlowed(true);
+                if(this.myFarm.get(i).plow()){
+                    this.toolUsed(tool);
                 }
             case "Watering Can":
-                if(this.myFarm.canWater(i) && (this.myFarm.getPlot(i).getTimesWatered() < this.bonusWater + this.myFarm.getPlot(i).getSeed().getWaterLimit())){
-                    this.myFarm.getPlot(i).addWater();
+                if(this.myFarm.get(i).water(this.bonusWater)){
+                    this.toolUsed(tool);
                 }
             case "Fertilizer" :
-                if(this.myFarm.canFertilize(i) && (this.myFarm.getPlot(i).getTimesAddedFertilizer() < this.bonusFertilizer + this.myFarm.getPlot(i).getSeed().getFertilizerLimit())){
-                    this.myFarm.getPlot(i).addFert();
+                if(this.myFarm.get(i).fertilize(this.bonusFertilizer)){
+                    this.toolUsed(tool);
                 }
             case "Pickaxe" :
-                //pick
+                if(this.myFarm.get(i).pickaxe()){
+                    this.toolUsed(tool);
+                }
             case "Shovel" :
-                //shovel
+                switch(this.myFarm.get(i).shovel()){
+                    case 0: this.gainExp(tool.getExpOnUse());
+                    case 1: ;
+                    case 2: this.useObjectCoins(tool.getUseCost()); break;
+                    case 3: System.out.println("error");
+                    default: System.out.println("error 2");
+                }
         }
     }
-
+    private void toolUsed(Tool tool){
+        this.gainExp(tool.getExpOnUse());
+        this.useObjectCoins(tool.getUseCost());
+    }
+    public void plantSeed(int i, Seed seed){
+        if(!this.myFarm.get(i).plant(seed))
+            System.out.println("Could not plant seed");
+    }
     public void Register(){
         if(this.farmer_type.equals("Farmer")){
             if(this.getLevel() >= 5 && this.getObjectCoins() >= 200){
