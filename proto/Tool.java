@@ -5,7 +5,7 @@ public class Tool {
     private double expOnUse;
     private String name;
 
-    public Tool(String name, double exp, int useCost){
+    public Tool(String name, int useCost, double exp){
         this.name = name;
         this.expOnUse = exp;
         this.useCost = useCost;

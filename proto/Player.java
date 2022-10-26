@@ -10,10 +10,14 @@ abstract class Player{
         this.name = name;
         this.objectCoins = 100;
         this.exp = 0;
-        this.level = 1;
+        this.level = 0;
     }
 
-
+    public void update(){
+        if (this.level <= Math.floor(exp/100) && this.exp > (this.level * 100) + 99){ //probably a better way to do this tbh
+            this.level++;
+        }
+    }
     public int getObjectCoins() {
         return this.objectCoins;
     }

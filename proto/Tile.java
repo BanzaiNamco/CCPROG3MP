@@ -28,7 +28,8 @@ public class Tile {
         this.daysOccupied = 0;
     }
     public void update(){
-        this.daysOccupied++;
+        if(this.hasPlant)
+            this.daysOccupied++;
         if(this.daysOccupied > this.seed.getHarvestTIme()){
             this.hasWither = true;
         }
@@ -61,14 +62,14 @@ public class Tile {
         return harvestTotal * 0.5 * this.timesFertilized;
     }
     public boolean plow(){
-        if( !(this.hasPlant && this.hasRock && this.isPlowed && this.hasWither) ){
+        if( !this.hasPlant && !this.hasRock && !this.isPlowed && !this.hasWither ){
             this.isPlowed = true;
             return true;
         }
         return false;
     }
     public boolean water(int bonusWater){
-        if(this.hasPlant && !this.hasWither && this.isPlowed){
+        if(this.hasPlant && this.isPlowed && !this.hasWither){
             if(this.timesWatered < this.seed.getWaterLimit() + bonusWater)
                 this.timesWatered++;
             return true;
@@ -112,9 +113,21 @@ public class Tile {
     public boolean plant(Seed seed){
         if(this.isPlowed && !this.hasPlant && !this.hasRock && !this.hasWither){
             this.seed = seed;
+            this.hasPlant = true;
+            System.out.println("Planted a " + this.seed.getName());
             return true;
         }
         return false;
+    }
+    public boolean requirementsMet(){
+        if(this.seed != null)
+            if(this.daysOccupied == this.seed.getHarvestTIme())
+                if(this.timesFertilized >= this.seed.getFertilizerNeed() && this.timesWatered >= this.seed.getWaterNeed())
+                    return true;
+        return false;
+    }
+    public int getSeedHarvestTime(){
+        return this.seed.getHarvestTIme();
     }
     public Seed getSeed(){
         return this.seed;
@@ -139,5 +152,22 @@ public class Tile {
     } 
     public int getDaysOccupied(){
         return this.daysOccupied;
+    }
+    public void showStats(){
+        System.out.println("\n");
+        if(seed != null){
+            System.out.println(seed.getName());
+        }
+        else{
+            System.out.println("No plant");
+        }
+        System.out.println("Plow: " + this.isPlowed);
+        System.out.println("Rock: " + this.hasRock);
+        System.out.println("Wither: " + this.hasWither);
+        if(seed!= null){
+            System.out.println("Times Watered: " + this.timesWatered);
+            System.out.println("Times Fertilized " + this.timesFertilized);
+            System.out.println("Days until harvest: " + (this.seed.getHarvestTIme() - this.daysOccupied));
+        }
     }
 }

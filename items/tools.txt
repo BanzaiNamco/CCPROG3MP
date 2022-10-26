@@ -1,0 +1,5 @@
+Plow-0-0.5
+WateringCan-0-0.5
+Fertilizer-10-4
+Pickaxe-50-15
+Shovel-7-2

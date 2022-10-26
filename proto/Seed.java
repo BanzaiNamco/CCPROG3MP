@@ -31,6 +31,7 @@ public class Seed {
             this.fertilizerLimit = fertNeed;
         }
         this.produceMin = prodMin;
+        this.produceMax = prodMax;
         this.cost = cost;
         this.baseSellingPrice = bsp;
         this.expYield = exp;
