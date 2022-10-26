@@ -1,5 +1,3 @@
-package proto;
-
 public class Tool {
     private int useCost;
     private double expOnUse;

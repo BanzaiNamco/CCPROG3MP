@@ -1,5 +1,3 @@
-package proto;
-
 public class Seed {
     private final String name;
     private final String cropType;

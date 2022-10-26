@@ -1,5 +1,3 @@
-package proto;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class Driver {
                     }
                     break;
                 case 2:
-                    player.plantSeed(0, seeds.get(0));
+                    player.plantSeed(seeds.get(0), 0);
                     break;
                 case 3:
                     player.harvest(0);
@@ -95,7 +93,7 @@ public class Driver {
                     gameState = false;
                     break;
                 case 7:
-                    player.gainExp(50);
+                    player.addEXP(50);
                     break;
                 default: System.out.println("error");;
             }
