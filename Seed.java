@@ -11,6 +11,8 @@ public class Seed {
     private int produceMax;
     private int cost;
     private double expYield;
+    private int timesWatered = 0;
+    private int timesFertilized = 0;
 
 
     public Seed(String name, String type, int harvestTime, int waterNeed, int fertNeed, int prodMin, int prodMax,
@@ -34,8 +36,45 @@ public class Seed {
         this.baseSellingPrice = bsp;
         this.expYield = exp;
     }
+    public Seed(Seed e){
+        this.name = e.getName();
+        this.cropType = e.getCropType();
+        this.harvestTime = e.getHarvestTime();
+        this.waterNeed = e.getWaterNeed();
+        this.fertilizerNeed = e.getFertilizerNeed();
+        this.waterLimit = e.getWaterLimit();
+        this.fertilizerLimit = e.getFertilizerLimit();
+        this.produceMax = e.getProduceMax();
+        this.produceMin = e.getProduceMin();
+        this.baseSellingPrice = e.getBaseSellingPrice();
+        this.expYield = e.getExpYield();
+        this.timesWatered = 0;
+        this.timesFertilized = 0;
+    }
     
-
+    public void update(){
+        this.harvestTime--;
+    }
+    public void water(int bonusWater){
+        if(this.timesWatered < (this.waterLimit + bonusWater))
+            this.timesWatered++;
+    }
+    public void fertilize(int bonusFertilizer){
+        if(this.timesFertilized < (this.fertilizerLimit + bonusFertilizer))
+            this.timesFertilized++;
+    }
+    public boolean getHarvestable(){
+        if (this.harvestTime == 0 && this.timesFertilized >= this.fertilizerNeed && this.timesWatered >= this.waterNeed)
+            return true;
+        return false;
+    }
+    public void displayStats(){
+        System.out.println("Times Watered: " + this.timesWatered);
+        System.out.println("Times Fertilized: " + this.timesFertilized);
+        if(this.harvestTime >= 0){
+            System.out.println("Days until harvest: " + this.harvestTime);
+        }
+    }
     public String getName(){
         return this.name;
     }
@@ -48,7 +87,7 @@ public class Seed {
     public double getExpYield(){
         return this.expYield;
     }
-    public int getHarvestTIme(){
+    public int getHarvestTime(){
         return this.harvestTime;
     }
     public int getWaterNeed(){
@@ -71,5 +110,11 @@ public class Seed {
     }
     public int getBaseSellingPrice(){
         return this.baseSellingPrice;
+    }
+    public int getTimesWatered(){
+        return this.timesWatered;
+    }
+    public int getTimesFertilized(){
+        return this.timesFertilized;
     }
 }

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Farmer extends Player{
 
@@ -7,23 +7,40 @@ public class Farmer extends Player{
     private int minusSeedCost;
     private int bonusWater;
     private int bonusFertilizer;
-    ArrayList<Tile> myFarm;
     
-    public Farmer(String name, ArrayList<Tile> myFarm){
+    public Farmer(String name){
         super(name);
         this.farmer_type = "Farmer";
         this.bonusEarn = 0;
         this.minusSeedCost = 0;
         this.bonusWater = 0;
         this.bonusFertilizer = 0;
-        this.myFarm = new ArrayList<Tile>(myFarm);
     }
     
-    public void harvest(int i){
-        if(this.myFarm.get(i).requirementsMet()){
-            double expYield = this.myFarm.get(i).getSeedExpYield();
-            int harvestTotal = this.myFarm.get(i).calcHarvestTotal(this.bonusEarn);
-            
+    public boolean harvest(Tile e){
+        if(e.getSeed() != null){
+            Seed seed = e.getSeed();
+            if(seed.getHarvestable()){
+                int harvestTotal = findHarvestTotal(seed);
+
+                this.gainExp(seed.getExpYield());
+                this.gainObjectCoins(harvestTotal);
+                e.resetTile();
+                return true;
+            }
+        }
+        return false;
+        /*if(this.myFarm.get(i).requirementsMet()){
+            Seed seed = this.myFarm.get(i).getSeed();
+            double expYield = seed.getExpYield();
+            int harvestTotal = this.harvestTotal(seed);
+           
+            int harvestTotal = getRandomProduce() * (this.seed.getBaseSellingPrice() + bonusEarn);
+            harvestTotal += getWaterBonus(harvestTotal) + getFertilizerBonus(harvestTotal);
+    
+            if(this.seed.getCropType().equals("Flower"))
+                harvestTotal *= 1.1;
+            return harvestTotal;
             this.gainExp(expYield);
             this.gainObjectCoins(harvestTotal);
             this.myFarm.get(i).resetTile();
@@ -33,31 +50,46 @@ public class Farmer extends Player{
         }
         else{
             System.out.println("Harvest unsuccessful");
-        }
+        }*/
     }
-    public void useTool(Tool tool, int i){
+    private int findHarvestTotal(Seed seed){
+        int harvestTotal = findRandomProduce(seed.getProduceMin(), seed.getProduceMax());
+        harvestTotal *= (seed.getBaseSellingPrice() + this.bonusEarn);
+        harvestTotal +=  findWaterBonus(harvestTotal, seed.getTimesWatered()) + findFertilizerBonus(harvestTotal, seed.getTimesFertilized());
+        return harvestTotal;
+    }
+    private int findRandomProduce(int min, int max){
+        return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
+    private double findWaterBonus(int harvestTotal, int timesWatered){
+        return harvestTotal * 0.2 * (timesWatered-1);
+    }
+    private double findFertilizerBonus(int harvestTotal, int timesFertilized){
+        return harvestTotal * 0.5 * timesFertilized;
+    }
+    public void useTool(Tool tool, Tile e){
         switch(tool.getName()){
             case "Plow":
-                this.plow(tool, i);
+                this.plow(tool, e);
                 break;
             case "WateringCan":
-                this.water(tool, i);
+                this.water(tool, e);
                 break;
             case "Fertilizer" :
-                this.fertilize(tool, i);
+                this.fertilize(tool, e);
                 break;
             case "Pickaxe" :
-                this.pickaxe(tool, i);
+                this.pickaxe(tool, e);
                 break;
             case "Shovel" :
-                this.shovel(tool, i);
+                this.shovel(tool, e);
                 break;
             default:
                 System.out.println("Error : unknown tool");
         }
     }
-    public void plantSeed(Seed seed, int i){
-        if(!this.myFarm.get(i).plant(seed))
+    public void plantSeed(Seed seed, Tile e){
+        if(!e.plant(seed))
             System.out.println("Could not plant seed");
     }
     public void registerFarmer(){
@@ -118,45 +150,56 @@ public class Farmer extends Player{
         return this.bonusFertilizer;
     }
     
-    private void plow(Tool tool, int i){
-        if(this.myFarm.get(i).plow()){
+    private void plow(Tool tool, Tile e){
+        if(e.plow()){
             this.toolUsed(tool);
         }
         else{
             System.out.println("Plow unsuccessful");
         }
     }
-    private void water(Tool tool, int i){
-        if(this.myFarm.get(i).water(this.bonusWater)){
+    private void water(Tool tool, Tile e){
+        if(e.water(this.bonusWater)){
             this.toolUsed(tool);
         }
         else{
             System.out.println("Watering unsuccessful");
         }
     }
-    private void fertilize(Tool tool, int i){
-        if(this.myFarm.get(i).fertilize(this.bonusFertilizer)){
+    private void fertilize(Tool tool, Tile e){
+        if(e.fertilize(this.bonusFertilizer)){
             this.toolUsed(tool);
         }
         else{
             System.out.println("Fertilizing unsuccessful");
         }
     }
-    private void pickaxe(Tool tool, int i){
-        if(this.myFarm.get(i).pickaxe()){
+    private void pickaxe(Tool tool, Tile e){
+        if(e.pickaxe()){
             this.toolUsed(tool);
         }
         else{
             System.out.println("Cannot use pickaxe");
         }
     }
-    private void shovel(Tool tool, int i){
-        switch(this.myFarm.get(i).shovel()){
-            case 0: this.toolUsed(tool); System.out.println("Withered plant removed!"); break;
-            case 1: this.myFarm.get(i).resetTile(); this.useObjectCoins(tool.getUseCost()); System.out.println("Plant removed!"); break;
-            case 2: this.useObjectCoins(tool.getUseCost()); System.out.println("Shovel used on nothing!"); break;
-            case 3: System.out.println("error"); break;
-            default: System.out.println("error 2");
+    private void shovel(Tool tool, Tile e){
+        switch(e.shovel()){
+            case 0: 
+                this.toolUsed(tool); 
+                System.out.println("Withered plant removed!"); 
+                break;
+            case 1:
+                this.useObjectCoins(tool.getUseCost());
+                System.out.println("Plant removed!");
+                break;
+            case 2:
+                this.useObjectCoins(tool.getUseCost());
+                System.out.println("Shovel used on nothing!");
+                break;
+            case 3:
+                System.out.println("error"); break;
+            default:
+                System.out.println("error 2");
         }
     }
     private void toolUsed(Tool tool){

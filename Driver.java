@@ -5,21 +5,9 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Driver {
-    public static void main(String[] args) throws FileNotFoundException {
+    private static void addTools(ArrayList<Tool> tools) throws FileNotFoundException{
         Scanner txtFileReader = new Scanner(new File("items/tools.txt")).useLocale(Locale.ENGLISH);
         txtFileReader.useDelimiter("-|\n");
-        
-        ArrayList<Tool> tools = new ArrayList<Tool>();
-        ArrayList<Seed> seeds = new ArrayList<Seed>();
-        ArrayList<Tile> plot = new ArrayList<Tile>();
-        // for (int i = 0; i < 50; i ++){
-            plot.add(new Tile());
-       // } 
-
-        boolean gameState = true;
-        int day = 0;
-        Farmer player = new Farmer("BOB", plot);
-
         while(txtFileReader.hasNext()){
             String toolName = txtFileReader.next();
             int useCost = txtFileReader.nextInt();
@@ -27,8 +15,10 @@ public class Driver {
             
             tools.add(new Tool(toolName, useCost, exp));
         }
-
-        txtFileReader = new Scanner(new File("items/seeds.txt")).useLocale(Locale.ENGLISH);
+        txtFileReader.close();
+    }
+    private static void addSeeds(ArrayList<Seed> seeds) throws FileNotFoundException{
+        Scanner txtFileReader = new Scanner(new File("items/seeds.txt")).useLocale(Locale.ENGLISH);
         txtFileReader.useDelimiter("-|\n");
         while(txtFileReader.hasNext()){
             String cropName = txtFileReader.next();
@@ -43,8 +33,28 @@ public class Driver {
             double exp = Double.valueOf(txtFileReader.next());
 
             seeds.add(new Seed(cropName, cropType, harvestTime, waterNeeds, fertNeeds, prodMin, prodMax, cost, bsp, exp));
-        }       
+        }   
+        txtFileReader.close();    
+    }
+    public static void main(String[] args) throws FileNotFoundException {
+        
+        
+        
+        ArrayList<Tool> tools = new ArrayList<Tool>();
+        ArrayList<Seed> seeds = new ArrayList<Seed>();
+        ArrayList<Tile> plot = new ArrayList<Tile>();
+        // for (int i = 0; i < 50; i ++){
+            plot.add(new Tile());
+       // } 
 
+        boolean gameState = true;
+        int day = 1;
+        Farmer player = new Farmer("BOB");
+        
+        addTools(tools);
+        addSeeds(seeds);
+
+        System.out.println(seeds.get(0).getWaterLimit());
         Scanner input = new Scanner(System.in);
         while(gameState){
             System.out.println();
@@ -59,27 +69,31 @@ public class Driver {
                     System.out.println("1. Plow\n2. Watering Can\n3. Fertilizer\n4. Pickaxe\n5. Shovel\n6. Cancel");
                     switch(input.nextInt()){
                         case 1:
-                            player.useTool(tools.get(0), 0);
+                            player.useTool(tools.get(0), plot.get(0));
                             break;
                         case 2:
-                            player.useTool(tools.get(1), 0);
+                            player.useTool(tools.get(1), plot.get(0));
                             break;
                         case 3:
-                            player.useTool(tools.get(2), 0);
+                            player.useTool(tools.get(2), plot.get(0));
                             break;
                         case 4:
-                            player.useTool(tools.get(3), 0);
+                            player.useTool(tools.get(3), plot.get(0));
                             break;
                         case 5:
-                            player.useTool(tools.get(4), 0);
+                            player.useTool(tools.get(4), plot.get(0));
                             break;
                     }
                     break;
                 case 2:
-                    player.plantSeed(seeds.get(0), 0);
+                    player.plantSeed(seeds.get(0), plot.get(0));
                     break;
                 case 3:
-                    player.harvest(0);
+                    if(player.harvest(plot.get(0))){
+                        System.out.println("Harvest Successful!");
+                    }
+                    else
+                        System.out.println("Harvest Failed!");
                     break;
                 case 4:
                     day++;
