@@ -117,4 +117,12 @@ public class Seed {
     public int getTimesFertilized(){
         return this.timesFertilized;
     }
+    public boolean getStatus(){
+        if(this.harvestTime < 0)
+            return true;
+        else if (this.harvestTime == 0 && (this.timesWatered < this.waterNeed || this.timesFertilized < this.fertilizerNeed))
+            return true;
+        else
+            return false;
+    }
 }

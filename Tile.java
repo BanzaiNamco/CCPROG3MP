@@ -9,10 +9,16 @@ public class Tile {
         this.hasRock = rock;
     }
 
-    public void update(){
-        this.seed.update();
-        if(this.seed.getHarvestTime() < 0)
-            this.hasWither = true;
+    public boolean update(){
+        if(this.seed != null){
+            this.seed.update();
+
+            if(this.seed.getStatus()){
+                this.hasWither = true;
+            }
+            return true;
+        }
+        return false;
     }
     public void resetTile(){
         this.isPlowed = false;
@@ -54,6 +60,7 @@ public class Tile {
     // 3 if error
     public int shovel(){
         if(this.seed != null && this.hasWither){
+            this.resetTile();
             return 0;
         }
         else if(this.seed != null && !this.hasWither){
@@ -61,6 +68,13 @@ public class Tile {
             return 1;
         }
         else if(this.seed == null || this.hasRock){
+            if(this.hasRock){
+                this.resetTile();
+                this.hasRock = true;
+            }
+            else
+                this.resetTile();
+            
             return 2;
         }
         else{
@@ -90,22 +104,18 @@ public class Tile {
         System.out.println("\n");
         if(seed != null){
             System.out.println(seed.getName());
-            //if(this.hasWither)
+            if(this.hasWither)
                 System.out.println("Wither: " + this.hasWither);
-            //else
+            else
                 this.seed.displayStats();
         }
         else{
             System.out.println("No plant");
             System.out.println("Plow: " + this.isPlowed);
             System.out.println("Rock: " + this.hasRock);
-            System.out.println("Wither: " + this.hasWither);
         }
     }
     
-    public double getSeedExpYield(){
-        return this.seed.getExpYield();
-    }
     public Seed getSeed(){
         return this.seed;
     }

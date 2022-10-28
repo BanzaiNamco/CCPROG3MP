@@ -24,7 +24,9 @@ public class Farmer extends Player{
                 int harvestTotal = findHarvestTotal(seed);
 
                 this.gainExp(seed.getExpYield());
+                System.out.println("Gained " + seed.getExpYield() + " exp!");
                 this.gainObjectCoins(harvestTotal);
+                System.out.println("Gained " + harvestTotal + " objectCoins!");
                 e.resetTile();
                 return true;
             }
@@ -54,6 +56,7 @@ public class Farmer extends Player{
     }
     private int findHarvestTotal(Seed seed){
         int harvestTotal = findRandomProduce(seed.getProduceMin(), seed.getProduceMax());
+        System.out.println(seed.getName() + " produced " + harvestTotal + " products");
         harvestTotal *= (seed.getBaseSellingPrice() + this.bonusEarn);
         harvestTotal +=  findWaterBonus(harvestTotal, seed.getTimesWatered()) + findFertilizerBonus(harvestTotal, seed.getTimesFertilized());
         return harvestTotal;

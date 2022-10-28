@@ -37,9 +37,6 @@ public class Driver {
         txtFileReader.close();    
     }
     public static void main(String[] args) throws FileNotFoundException {
-        
-        
-        
         ArrayList<Tool> tools = new ArrayList<Tool>();
         ArrayList<Seed> seeds = new ArrayList<Seed>();
         ArrayList<Tile> plot = new ArrayList<Tile>();
@@ -49,13 +46,14 @@ public class Driver {
 
         boolean gameState = true;
         int day = 1;
-        Farmer player = new Farmer("BOB");
+        Scanner input = new Scanner(System.in);
+        System.out.println("Welcome to Farming Game #12111287");
+        System.out.println("Please enter your name: ");
+        Farmer player = new Farmer(input.next());
         
         addTools(tools);
         addSeeds(seeds);
-
-        System.out.println(seeds.get(0).getWaterLimit());
-        Scanner input = new Scanner(System.in);
+        
         while(gameState){
             System.out.println();
             System.out.println(player.getName() + " Day " + day);
@@ -96,9 +94,15 @@ public class Driver {
                         System.out.println("Harvest Failed!");
                     break;
                 case 4:
+                    int ctr = 0;
+                    
+                    for (int i = 0; i < plot.size(); i++){
+                        if(!plot.get(i).getHasWithered() && plot.get(i).update())
+                            ctr++;
+                    }
+                    if(ctr == 0)
+                        gameState = false;
                     day++;
-                    for (int i = 0; i < plot.size(); i++)
-                        plot.get(i).update();
                     break;
                 case 5:
                     plot.get(0).showStats();
@@ -109,10 +113,11 @@ public class Driver {
                 case 7:
                     player.addEXP(50);
                     break;
-                default: System.out.println("error");;
+                default: System.out.println("error");
             }
             player.update();
         }
+        System.out.println("Game over");
         input.close();
     }
 }
