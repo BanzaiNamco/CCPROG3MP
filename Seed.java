@@ -1,5 +1,3 @@
-package proto;
-
 public class Seed {
     private final String name;
     private final String cropType;
@@ -31,10 +29,13 @@ public class Seed {
             this.fertilizerLimit = fertNeed;
         }
         this.produceMin = prodMin;
+        this.produceMax = prodMax;
         this.cost = cost;
         this.baseSellingPrice = bsp;
         this.expYield = exp;
     }
+    
+
     public String getName(){
         return this.name;
     }
