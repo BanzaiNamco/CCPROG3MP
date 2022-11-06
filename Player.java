@@ -1,4 +1,8 @@
-abstract class Player{
+//Orrin Landon T. Uy S17 ID12111287\
+/**
+ * This class handles all basic functions of a non-specialized player
+ */
+public class Player{
     private int objectCoins;
     private double exp;
     private int level;

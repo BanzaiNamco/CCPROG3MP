@@ -78,10 +78,10 @@ public class Farmer extends Player{
      * @param e  tile where seed is to be planted on
      */
     public void plantSeed(Seed seed, Tile e){
-        Seed newSeed = new Seed(seed);
-        if(e.plant(newSeed)){
-            this.useObjectCoins(newSeed.getCost());
-            System.out.println("Used " + newSeed.getCost() + " objectCoins");
+        
+        if(e.plant(new Seed(seed))){
+            this.useObjectCoins(e.getSeed().getCost());
+            System.out.println("Used " + e.getSeed().getCost() + " objectCoins");
         }
         else{
             System.out.println("Could not plant seed");

@@ -1,5 +1,7 @@
-//Orrin Landon T. Uy
-//This class is responsible for the state of each tile in the game
+//Orrin Landon T. Uy S17 ID12111287
+/**
+ * This class is responsible for all functions for an individual tile in the game
+ */
 
 public class Tile {
     private boolean isPlowed = false;

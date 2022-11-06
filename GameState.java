@@ -1,3 +1,8 @@
+//Orrin Landon T. Uy S17 ID12111287
+/**
+ * This class handles the general status of the game.
+ * Additionally, all computations are made here
+ */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
-///This class handles all relevant information on each tool
-//Functionality for this class is not implemented as the use of each tool is a
-//case by case basis
+//Orrin Landon T. Uy S17 ID12111287
+/**
+ * This class handles the information of a tool
+ */
 
 public class Tool {
     private int useCost;
@@ -13,17 +14,21 @@ public class Tool {
         this.useCost = useCost;
     }
 
-    /* This method returns expOnUse 
+    /** 
+     * This method returns expOnUse 
      */
     public double getExpOnUse(){
         return this.expOnUse;
     }
-    /* This method returns useCost
+    /**
+     * This method returns useCost
      */
     public int getUseCost(){
         return this.useCost;
     }
-    /*This method returns name*/
+    /**
+     * This method returns name
+     */
     public String getName(){
         return this.name;
     }

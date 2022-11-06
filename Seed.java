@@ -1,4 +1,7 @@
-//This class handles all attributes of a crop
+//Orrin Landon T. Uy S17 ID12111287
+/**
+ * This class handles all the information relevant to a seed in the game
+ */
 
 public class Seed {
     private final String name;
