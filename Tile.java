@@ -17,7 +17,7 @@ public class Tile {
     /**
      * Calls the seed update() method if seed is present
      * Updates hasWither if the seed is withered
-     * @return true if seed is present and has been updated, false otherwise
+     * @return true if seed is present and alive, false otherwise
      */
     public boolean update(){
         if(this.seed != null){
@@ -25,6 +25,7 @@ public class Tile {
 
             if(this.seed.getWither()){
                 this.hasWither = true;
+                return false;
             }
             return true;
         }
@@ -46,8 +47,10 @@ public class Tile {
     public boolean plow(){
         if( this.seed == null && !this.hasRock && !this.isPlowed && !this.hasWither ){
             this.isPlowed = true;
+            System.out.println("Tile plowed!");
             return true;
         }
+        System.out.println("Plow unsuccessful!");
         return false;
     }
     /**
@@ -58,8 +61,10 @@ public class Tile {
     public boolean water(int bonusWater){
         if(this.seed != null && this.isPlowed && !this.hasWither){
             this.seed.water(bonusWater);
+            System.out.println("Crop watered!");
             return true;
         }
+        System.out.println("Watering failed!");
         return false;
     }
     /**
@@ -70,8 +75,10 @@ public class Tile {
     public boolean fertilize(int bonusFertilizer){
         if(this.seed != null && !this.hasWither && this.isPlowed){
             this.seed.fertilize(bonusFertilizer);
+            System.out.println("Crop fertilized!");
             return true;
         }
+        System.out.println("Fertilizing failed!");
         return false;
     }
     /**
@@ -81,8 +88,10 @@ public class Tile {
     public boolean pickaxe(){
         if(this.hasRock){
             this.hasRock = false;
+            System.out.println("Rock removed!");
             return true;
         }
+        System.out.println("No rock to remove");
         return false;
     }
     /**
@@ -95,23 +104,22 @@ public class Tile {
     public int shovel(){
         if(this.seed != null && this.hasWither){
             this.resetTile();
+            System.out.println("Removed withered plant!");
             return 0;
         }
         else if(this.seed != null && !this.hasWither){
             this.resetTile();
+            System.out.println("Removed plant!");
             return 1;
         }
         else if(this.seed == null || this.hasRock){
-            if(this.hasRock){
-                this.resetTile();
-                this.hasRock = true;
-            }
-            else
-                this.resetTile();
-            
+            if(!this.hasRock)
+                resetTile();
+            System.out.println("Nothing happened...");
             return 2;
         }
         else{
+            System.out.println("Error");
             return 3;
         }
     }
@@ -124,7 +132,6 @@ public class Tile {
     public boolean plant(Seed seed){
         if(this.isPlowed && this.seed == null && !this.hasRock && !this.hasWither){
             this.seed = seed;
-            //insert check for tree here
             System.out.println("Planted a " + this.seed.getName());
             return true;
         }
@@ -152,7 +159,6 @@ public class Tile {
     public boolean getHasWithered(){
         return this.hasWither;
     }
-    
     /**
      * Displays the plowing and rock status of the tile if no seed is present
      * Otherwise displays the seed name and calls seed.displayStats() if the seed is not withered
@@ -172,7 +178,6 @@ public class Tile {
             System.out.println("Rock: " + this.hasRock);
         }
     }
-    
     /**
      * Returns the seed in the tile
      * @return seed

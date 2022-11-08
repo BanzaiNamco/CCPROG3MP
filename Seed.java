@@ -1,6 +1,7 @@
 //Orrin Landon T. Uy S17 ID12111287
 /**
- * This class handles all the information relevant to a seed in the game
+ * This class handles all the information and informaiton updates
+ * of a seed in the game
  */
 
 public class Seed {
@@ -83,11 +84,13 @@ public class Seed {
     }
 
     /**
-     * Checks if the plant is harvestable or not
-     * @return true if harvestable, false otherwise
+     * Checks if the plant is harvestable or not.
+     * 
+     * @return true if harvestable
+     *         false otherwise
      */
-    public boolean getHarvestable(){
-        if (this.harvestTime == 0 && this.timesFertilized >= this.fertilizerNeed && this.timesWatered >= this.waterNeed)
+    public boolean isHarvestable(){
+        if(this.harvestTime == 0 && this.timesFertilized >= this.fertilizerNeed && this.timesWatered >= this.waterNeed)
             return true;
         return false;
     }
@@ -203,8 +206,9 @@ public class Seed {
         return this.timesFertilized;
     }
     /**
-     * Returns true if the seed is dead, false otherwise
-     * @return true if seed is dead, false otherwise
+     * Checks if the plant is dead
+     * @return true if seed is dead
+     *         false otherwise
      */
     public boolean getWither(){
         if(this.harvestTime < 0)
