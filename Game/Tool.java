@@ -4,12 +4,10 @@
  */
 
 public class Tool {
-    private int useCost;
+    private double useCost;
     private double expOnUse;
-    private String name;
 
-    public Tool(String name, int useCost, double exp){
-        this.name = name;
+    public Tool(double useCost, double exp){
         this.expOnUse = exp;
         this.useCost = useCost;
     }
@@ -23,13 +21,7 @@ public class Tool {
     /**
      * This method returns useCost
      */
-    public int getUseCost(){
+    public double getUseCost(){
         return this.useCost;
-    }
-    /**
-     * This method returns name
-     */
-    public String getName(){
-        return this.name;
     }
 }

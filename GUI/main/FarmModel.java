@@ -1,21 +1,36 @@
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 public class FarmModel {
-    private ArrayList<BufferedImage> tiles = new ArrayList<>();
+    /*private Farmer player;
+    private ArrayList<Tile> plot;
+    private ArrayList<Tool> tools;
+*/
+    public FarmModel(String name){
+    /*    player = new Farmer(name);
+        plot = new ArrayList<Tile>(); //create a map, max # of rocks, etc
+        tools = new ArrayList<Tool>();
 
-    public FarmModel(){
-        try{
-            tiles.add(ImageIO.read(new File("../www/img/tiles/tilesets/grass.png")));
-        } catch(IOException e){
-            System.out.println("lol");
+        try {
+            toolsInit(tools);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-    }
 
-    public BufferedImage getTileImage(int i){
-        return tiles.get(i);
+    } 
+    private static void toolsInit(ArrayList<Tool> tools) throws FileNotFoundException{
+        Scanner txtFileReader = new Scanner(new File("items/tools.txt")).useLocale(Locale.ENGLISH);
+        txtFileReader.useDelimiter("-|\n");
+        while(txtFileReader.hasNext()){
+            String toolName = txtFileReader.next();
+            int useCost = txtFileReader.nextInt();
+            double exp = Double.valueOf(txtFileReader.next());
+            
+            tools.add(new Tool(toolName, useCost, exp));
+        }
+        txtFileReader.close();*/
     }
 }
