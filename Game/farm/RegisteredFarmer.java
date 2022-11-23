@@ -9,7 +9,7 @@ public class RegisteredFarmer extends Player{
     private final int seedCostReduction = 1;
 
     public RegisteredFarmer(Player farmer){
-        super(farmer);
+        super(farmer, 200);
     }
     
     @Override

@@ -1,7 +1,5 @@
 package seeds;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public abstract class Crop {
     
     private final String name;

@@ -2,13 +2,13 @@ package farm;
 
 import seeds.*;
 
-public class DistinguishedFarmer extends RegisteredFarmer{
+public class DistinguishedFarmer extends Player{
     private final int bonusEarn = 2;
     private final int seedCostReduction = 2;
     private final int bonusWater = 1;
 
     public DistinguishedFarmer(Player farmer) {
-        super(farmer);
+        super(farmer, 300);
     }
 
     @Override

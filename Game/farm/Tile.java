@@ -13,16 +13,17 @@ public class Tile {
     }
 
     public boolean plant(Crop seed){
-        if(plant!=null){
+        if(plant!=null || rock || !plowed){
             System.out.println("Error");
             return false;
         }
+
         this.plant = seed;
         return true;
     }
 
     public boolean plow(){
-        if(!plowed){
+        if(!plowed && plant == null && !rock){
             this.plowed = true;
             return true;
         }

@@ -16,9 +16,9 @@ public abstract class Player {
         this.level = 0;
         this.exp = 0;
     }
-    protected Player(Player player){
+    protected Player(Player player, int objectCoins){
         this.name = player.getName();
-        this.objectCoins = player.getObjectCoins();
+        this.objectCoins = player.getObjectCoins() - objectCoins;
         this.level = player.getLevel();
         this.exp = player.getExp();
     }
@@ -64,13 +64,16 @@ public abstract class Player {
         return harvestTotal * 0.2 * timesWatered;
     }
 
-    public void harvestCrop(Tile tile){
-        Crop tempCrop = tile.getCrop();
-        if(!tempCrop.getDead() && tempCrop.getHarvestTime() == 0){
-            double harvestTotal = getHarvestTotal(tempCrop);
-            addObjectCoins(harvestTotal);
-            gainExp(tempCrop.getExpYield());
+    public boolean harvestCrop(Tile tile){
+        if(tile.getCrop() != null){
+            if(!tile.getCrop().getDead() && tile.getCrop().getHarvestTime() == 0){
+                double harvestTotal = getHarvestTotal(tile.getCrop());
+                addObjectCoins(harvestTotal);
+                gainExp(tile.getCrop().getExpYield());
+                return true;
+            }
         }
+        return false;
     }
     
     public void useTool(Tool tool, Tile tile){
