@@ -1,3 +1,6 @@
+package tools;
+import farm.*;
+
 public class Shovel extends Tool implements Useable {
 
     public Shovel(double useCost, double exp) {

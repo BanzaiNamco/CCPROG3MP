@@ -1,3 +1,7 @@
+package farm;
+
+import seeds.*;
+
 public class Tile {
     private Crop plant = null;
     private boolean rock = false;
@@ -9,7 +13,7 @@ public class Tile {
     }
 
     public boolean plant(Crop seed){
-        if(plant==null){
+        if(plant!=null){
             System.out.println("Error");
             return false;
         }

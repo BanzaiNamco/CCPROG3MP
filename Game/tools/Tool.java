@@ -2,8 +2,9 @@
 /**
  * This class handles the information of a tool
  */
+package tools;
 
-public class Tool {
+public abstract class Tool {
     private double useCost;
     private double expOnUse;
 

@@ -1,3 +1,7 @@
+package tools;
+
+import farm.*;
+
 public class WateringCan extends Tool implements Useable{
 
     public WateringCan(double useCost, double exp) {

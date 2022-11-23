@@ -1,3 +1,5 @@
+package seeds;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Crop {
@@ -40,25 +42,15 @@ public abstract class Crop {
         timesFertilized++;
     }
 
-    protected int findRandomProduce(int min, int max){
-        return ThreadLocalRandom.current().nextInt(min, max + 1);
-    }
-
-    protected double getWaterBonus(double harvestTotal, int bonusWater){
-        int newLimit = waterLimit + bonusWater;
+    public double getWaterBonus(double harvestTotal, int waterBonus){
+        int newLimit = waterLimit + waterBonus;
         if(timesWatered > newLimit){
             return harvestTotal * 0.2 * (newLimit-1);
         }
         return harvestTotal * 0.2 * (timesWatered -1);
     }
-    protected double getWaterBonus(double harvestTotal){
-        if(timesWatered > waterLimit){
-            return harvestTotal * 0.2 * (waterLimit-1);
-        }
-        return harvestTotal * 0.2 * (timesWatered -1);
-    }
 
-    protected double getFertBonus(double harvestTotal, int bonusFert){
+    public double getFertBonus(double harvestTotal, int bonusFert){
         int newLimit = fertilizerLimit + bonusFert;
         if(timesFertilized > newLimit){
             return harvestTotal * 0.5 * newLimit;
@@ -66,31 +58,8 @@ public abstract class Crop {
         return harvestTotal * 0.5 * timesFertilized;
     }
 
-    protected double getFertBonus(double harvestTotal){
-        if(timesFertilized > fertilizerLimit){
-            return harvestTotal * 0.5 * fertilizerLimit;
-        }
-        return harvestTotal * 0.5 * timesFertilized;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public int getWaterNeed() {
-        return this.waterNeed;
-    }
-
-    public int getFertilizerNeed() {
-        return this.fertilizerNeed;
-    }
-
-    public int getWaterLimit() {
-        return this.waterLimit;
-    }
-
-    public int getFertilizerLimit() {
-        return this.fertilizerLimit;
     }
 
     public int getHarvestTime() {
@@ -117,6 +86,12 @@ public abstract class Crop {
         return this.timesFertilized;
     }
 
+    public int getFertilizerLimit(){
+        return this.fertilizerLimit;
+    }
+    public int getWaterLimit(){
+        return this.waterLimit;
+    }
     public boolean getDead(){
         return this.dead;
     }

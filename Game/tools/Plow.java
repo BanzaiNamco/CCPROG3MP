@@ -1,3 +1,7 @@
+package tools;
+
+import farm.*;
+
 public class Plow extends Tool implements Useable{
     public Plow(double expOnUse, double useCost){
         super(useCost, expOnUse);
