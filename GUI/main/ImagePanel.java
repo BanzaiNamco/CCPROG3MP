@@ -41,7 +41,8 @@ public class ImagePanel extends JPanel{
         initImages();
     }    
 
-    public void paint(Graphics g){
+    @Override
+    public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
 
@@ -62,4 +63,9 @@ public class ImagePanel extends JPanel{
             }        
         }
     }
+
+    //Create draw() method
+    //add a setter/changer for the center pieces OR
+    //Create another class for the center pieces
+    //create another another class for the seeds
 }

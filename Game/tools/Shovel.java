@@ -1,7 +1,7 @@
 package tools;
 import farm.*;
 
-public class Shovel extends Tool implements Useable {
+public class Shovel extends Tool{
 
     public Shovel(double useCost, double exp) {
         super(useCost, exp);

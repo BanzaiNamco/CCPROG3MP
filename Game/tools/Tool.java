@@ -4,6 +4,8 @@
  */
 package tools;
 
+import farm.Tile;
+
 public abstract class Tool {
     private double useCost;
     private double expOnUse;
@@ -25,4 +27,6 @@ public abstract class Tool {
     public double getUseCost(){
         return this.useCost;
     }
+
+    public abstract boolean use(Tile tile);
 }

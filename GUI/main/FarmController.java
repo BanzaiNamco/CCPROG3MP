@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JOptionPane;
+
 public class FarmController {
     private FarmModel model;
     private View1 view;
@@ -9,7 +11,8 @@ public class FarmController {
         this.view = view;
         this.model = model;
 
-        view.setPlayerNameTxt("orrin");
+
+        view.setPlayerNameTxt(model.getName());
         view.setCoinsTxt("100");
         view.setDayTxt("1");
         view.setLevelTxt("0");

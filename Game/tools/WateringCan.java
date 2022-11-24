@@ -2,7 +2,7 @@ package tools;
 
 import farm.*;
 
-public class WateringCan extends Tool implements Useable{
+public class WateringCan extends Tool{
 
     public WateringCan(double useCost, double exp) {
         super(useCost, exp);

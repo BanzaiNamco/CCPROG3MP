@@ -77,15 +77,13 @@ public abstract class Player {
     }
     
     public void useTool(Tool tool, Tile tile){
-        if(tool instanceof Useable){
-            if(((Useable)tool).use(tile)){
-                gainExp(tool.getExpOnUse());
+        if(tool.use(tile)){
+            gainExp(tool.getExpOnUse());
+            useObjectCoins(tool.getUseCost());
+        }
+        else{
+            if(tool instanceof Shovel){
                 useObjectCoins(tool.getUseCost());
-            }
-            else{
-                if(tool instanceof Shovel){
-                    useObjectCoins(tool.getUseCost());
-                }
             }
         }
     }

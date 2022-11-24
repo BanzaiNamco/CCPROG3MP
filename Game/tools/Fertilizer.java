@@ -2,7 +2,7 @@ package tools;
 
 import farm.*;
 
-public class Fertilizer extends Tool implements Useable {
+public class Fertilizer extends Tool{
 
     public Fertilizer(double useCost, double exp) {
         super(useCost, exp);
