@@ -34,4 +34,11 @@ public class RegisteredFarmer extends Player{
             useObjectCoins(crop.getCost() - seedCostReduction);
         }
     }
+
+    public static int getLevelReq(){
+        return 5;
+    }
+    public static double getCost(){
+        return 200;
+    }
 }

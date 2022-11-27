@@ -1,3 +1,4 @@
+package GUI;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -14,25 +15,24 @@ public class ImagePanel extends JPanel{
     private ArrayList<BufferedImage> ground = new ArrayList<BufferedImage>();
     private int imageSize = 16;
     private int scale = 4;
-    private int screenRows = 6;
-    private int screenCols = 11;
+    private int screenRows = 7;
+    private int screenCols = 12;
     private int rows = 7;
     private int cols = 11;
     private int map[][] = {
-        {0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 14},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {2, 9, 9, 9 ,9 ,9 ,9 ,9 ,9 ,9, 16},
+        {0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 14},
+        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
+        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
+        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
+        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
+        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
+        {2, 9, 9, 9 ,9 ,9 ,9 ,9 ,9 ,9, 9, 16},
     };
     
-    //separate the image into parts then paint that
 
     public ImagePanel(){
-        
         try {
-            image = ImageIO.read(new File("../www/img/tiles/grass_hill.png"));
+            image = ImageIO.read(new File("GUI/www/img/tiles/grass_hill.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,11 +42,12 @@ public class ImagePanel extends JPanel{
     }    
 
     @Override
-    public void paintComponent(Graphics g){
+    public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
 
         super.paint(g2d);
+
         for(int i = 0; i < screenCols; i ++){
             for (int j = 0; j < screenRows; j++){
                 g2d.drawImage(ground.get(map[j][i]), i * imageSize * scale, j * imageSize * scale, imageSize * scale, imageSize * scale,  this);

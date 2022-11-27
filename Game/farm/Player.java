@@ -16,6 +16,7 @@ public abstract class Player {
         this.level = 0;
         this.exp = 0;
     }
+
     protected Player(Player player, int objectCoins){
         this.name = player.getName();
         this.objectCoins = player.getObjectCoins() - objectCoins;
@@ -115,5 +116,4 @@ public abstract class Player {
     public double getExp(){
         return this.exp;
     }
-
 }

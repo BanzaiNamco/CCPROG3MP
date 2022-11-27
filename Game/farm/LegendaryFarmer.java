@@ -52,4 +52,10 @@ public class LegendaryFarmer extends Player{
             useObjectCoins(crop.getCost() - seedCostReduction);
         }
     }
+    public static int getLevelReq(){
+        return 15;
+    }
+    public static double getCost(){
+        return 400;
+    }
 }
