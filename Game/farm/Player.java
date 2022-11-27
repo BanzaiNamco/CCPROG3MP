@@ -24,10 +24,12 @@ public abstract class Player {
         this.exp = player.getExp();
     }
     
-    public void update(){
-        if (this.level <= Math.floor(exp/100) && this.exp > (this.level * 100) + 99){ //probably a better way to do this tbh
-            this.level++;
-        }
+    public boolean update(){
+        int lvl = this.level;
+        this.level = (int) Math.floor(exp/100);
+        if(level > lvl)
+            return true;
+        return false;
     }
 
     protected double getHarvestTotal(Crop crop){
@@ -115,5 +117,9 @@ public abstract class Player {
 
     public double getExp(){
         return this.exp;
+    }
+
+    public void addExp(){
+        this.exp += 69;
     }
 }

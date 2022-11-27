@@ -2,7 +2,6 @@ package GUI;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -30,13 +29,9 @@ public class ImagePanel extends JPanel{
     };
     
 
-    public ImagePanel(){
-        try {
-            image = ImageIO.read(new File("GUI/www/img/tiles/grass_hill.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.setPreferredSize(new Dimension(420, 420));
+    public ImagePanel() throws IOException{
+        image = ImageIO.read(new File("GUI/www/img/tiles/grass_hill.png"));
+        
 
         initImages();
     }    

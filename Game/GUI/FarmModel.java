@@ -1,9 +1,5 @@
 package GUI;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
 
 import farm.*;
 
@@ -20,7 +16,7 @@ public class FarmModel {
     };
     /*private ArrayList<Tool> tools;
 */
-    private String name;
+    
     public FarmModel(String name, ArrayList<Tile> plot){
         player = new Farmer(name);
         this.plot = plot;

@@ -1,6 +1,4 @@
 package GUI;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
@@ -47,7 +45,10 @@ public class FarmController {
                         model.setPlayer(temp);
                     }
                     else{
-                        System.out.println("Requirements not met"); //TODO add to gui and add to others
+                        int lvlReq = RegisteredFarmer.getLevelReq() - temp.getLevel();  
+                        double moneyReq = RegisteredFarmer.getCost() - temp.getObjectCoins();
+                        view.setFeedbackText("<html>Unable to upgrade to Registered Farmer.<br/><br/>You need "
+                                             + lvlReq + " more levels<br/>and " + moneyReq + " more objectCoins</html>");
                     }
                 }
                 else if (temp instanceof RegisteredFarmer){
@@ -55,15 +56,29 @@ public class FarmController {
                         temp = new LegendaryFarmer(temp);
                         model.setPlayer(temp);
                     }
+                    else{
+                        int lvlReq = RegisteredFarmer.getLevelReq() - temp.getLevel();  
+                        double moneyReq = RegisteredFarmer.getCost() - temp.getObjectCoins();
+                        view.setFeedbackText("<html>Unable to upgrade to Distinguished Farmer.<br/><br/>You need "
+                                             + lvlReq + " more levels<br/>and " + moneyReq + " more objectCoins</html>");
+                    }
+                    
                 }
                 else if(temp instanceof DistinguishedFarmer){
                     if(temp.getLevel() >= LegendaryFarmer.getLevelReq() && temp.getObjectCoins() >= LegendaryFarmer.getCost()){
                         temp = new LegendaryFarmer(temp);
                         model.setPlayer(temp);
                     }
+                    else{
+                        int lvlReq = RegisteredFarmer.getLevelReq() - temp.getLevel();  
+                        double moneyReq = RegisteredFarmer.getCost() - temp.getObjectCoins();
+                        view.setFeedbackText("<html>Unable to upgrade to Legendary Farmer.<br/><br/>You need "
+                                             + lvlReq + " more levels<br/>and " + moneyReq + " more objectCoins</html>");
+                    }
                 }
-                //TODO add notif if cannot upgrade anymore
-                //maybe add a display as well
+                else{
+                    view.setFeedbackText("<html>Max upgrade already reached!</html>");
+                }
                 
             }
         });
@@ -84,6 +99,18 @@ public class FarmController {
                     JFrame end = new JFrame();
                     //TODO end the game
                 }
+            }
+
+        });
+
+        view.setAdminPriv(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.getPlayer().addExp();
+                if(model.getPlayer().update())
+                    view.setFeedbackText("<html>Level UP!</html>");
+                updateDisplay();
             }
 
         });
