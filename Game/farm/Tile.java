@@ -14,7 +14,7 @@ public class Tile {
 
     public boolean plant(Crop seed){
         if(plant!=null || rock || !plowed){
-            System.out.println("Error");
+            System.out.println("Error planting seed");//TODO remove this 
             return false;
         }
 

@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -85,7 +86,7 @@ public class View1 {
         leftPanel = new JPanel(new GridLayout(7, 2));
         imagePanel = new ImagePanel();
         gamePanel = new GamePanel();
-        gamePanel2 = new JPanel(); //TODO maybe make this into ANOTHER view? NOTE: this is for the seeds/plant layer
+        //gamePanel2 = new JPanel(); //TODO maybe make this into ANOTHER view? NOTE: this is for the seeds/plant layer
         smallPanel = new JLayeredPane();
         
         gamePanel.setLayout(new GridLayout(5, 10));

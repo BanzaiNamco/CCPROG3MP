@@ -2,7 +2,7 @@ package farm;
 
 import seeds.*;
 
-public class DistinguishedFarmer extends Player{
+public class DistinguishedFarmer extends Player implements Upgradeable{
     private final int bonusEarn = 2;
     private final int seedCostReduction = 2;
     private final int bonusWater = 1;

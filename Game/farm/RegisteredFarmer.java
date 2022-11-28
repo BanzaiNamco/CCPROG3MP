@@ -4,7 +4,7 @@ import seeds.BountifulHarvest;
 import seeds.Crop;
 import seeds.Flower;
 
-public class RegisteredFarmer extends Player{
+public class RegisteredFarmer extends Player implements Upgradeable{
     private final int bonusEarn = 1;
     private final int seedCostReduction = 1;
 

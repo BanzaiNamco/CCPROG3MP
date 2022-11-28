@@ -121,5 +121,6 @@ public abstract class Player {
 
     public void addExp(){
         this.exp += 69;
+        this.objectCoins += 100;
     }
 }
