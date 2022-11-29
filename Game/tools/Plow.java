@@ -3,8 +3,8 @@ package tools;
 import farm.*;
 
 public class Plow extends Tool{
-    public Plow(double expOnUse, double useCost){
-        super(useCost, expOnUse);
+    public Plow(double useCost, double exp){
+        super(useCost, exp);
     }
 
     @Override

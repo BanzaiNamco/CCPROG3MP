@@ -39,4 +39,8 @@ public class Tile {
     public Crop getCrop(){
         return this.plant;
     }
+
+    public boolean getRock(){
+        return this.rock;
+    }
 }

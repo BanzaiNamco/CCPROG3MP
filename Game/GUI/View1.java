@@ -87,6 +87,7 @@ public class View1 {
         imagePanel = new ImagePanel();
         gamePanel = new GamePanel();
         //gamePanel2 = new JPanel(); //TODO maybe make this into ANOTHER view? NOTE: this is for the seeds/plant layer
+        //TODO add a harvest button
         smallPanel = new JLayeredPane();
         
         gamePanel.setLayout(new GridLayout(5, 10));

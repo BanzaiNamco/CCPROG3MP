@@ -36,24 +36,64 @@ public class FarmController {
     
     private void setButtons(){
         view.setTurnipBtnActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!plantRtCrop(0))
+                    System.out.println("Crop is not root crop");
+            }
+        });
+        view.setCarrotBtnActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!plantRtCrop(1))
+                    System.out.println("Crop is not root crop");
+            }
+        });
+        view.setPotatoBtnActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!plantRtCrop(2))
+                    System.out.println("Crop is not root crop");
+            }
+        });
+        view.setRoseBtnActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!plantFlower(3))
+                    System.out.println("Crop is not flower");
+            }
+        });
+        view.setTulipsBtnActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!plantFlower(4))
+                    System.out.println("Crop is not flower");
+            }
+        });
+        view.setSunflowerBtnActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!plantFlower(5))
+                    System.out.println("Crop is not flower");
+            }
+        });
+        //TODO trees
+        view.setPlowBtnActionListener(new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                int index;
-                String indexStr = JOptionPane.showInputDialog("Choose a tile");
-                try {
-                    index = Integer.parseInt(indexStr);
-                } catch (NumberFormatException a) {
-                    index = 0;
-                }
-                if (index <= 0 || index > 50)
-                    view.setFeedbackText("Invalid input!");
-                else if(index > 0 && index < 51){
-                    index--;
-                    model.getPlot(index).plant(new RootCrop((RootCrop) model.getCrop(0))); //TODO REPEAT FOR ALL BUTTONS
+                int index = getUserInput();
+                if(index != -1){
+                    Tool plow = model.getTool(0);
+                    Player player = model.getPlayer();
+                    if(player.useTool(plow, model.getPlot(index))){
+                        view.setFeedbackText("<html>Used  plow tool! <br/>Used " + plow.getUseCost() + " objectCoins!<br/>Got " + plow.getExpOnUse() + " exp!</html>");
+                        updateDisplay();
+                    }
+                    else
+                        view.setFeedbackText("<html>Cannot use tool there!</html>");
                 }
             }
-
         });
 
         view.setFarmerRegistrationActionListener(new ActionListener(){
@@ -146,5 +186,48 @@ public class FarmController {
 
         });
     }
-    
+    private int getUserInput(){
+        int index;
+        String indexStr = JOptionPane.showInputDialog("Choose a tile");
+        try {
+            index = Integer.parseInt(indexStr);
+        } catch (NumberFormatException a) {
+            index = 0;
+        }
+        if (index > 0 && index < 51)
+            return index-1;
+
+        view.setFeedbackText("Invalid input!");
+        return -1;
+    }
+    private boolean plantRtCrop(int i){
+        int index = getUserInput();
+        if(index != -1 && model.getCrop(i) instanceof RootCrop){
+            RootCrop newCrop = (RootCrop) model.getCrop(i);
+            Player player = model.getPlayer();
+            if(player.plant(new RootCrop(newCrop), model.getPlot(index)))
+                view.setFeedbackText("<html>Planted a " + newCrop.getName() + "<br/>Used " + newCrop.getCost() + " objectCoins!</html>");
+            else
+                view.setFeedbackText("<html>Cannot plant crop there!</html>");
+            model.setPlayer(player);
+            updateDisplay();
+            return true;
+        }
+        return false;
+    }
+    private boolean plantFlower(int i){
+        int index = getUserInput();
+        if(index != -1 && model.getCrop(i) instanceof Flower){
+            Flower newCrop = (Flower) model.getCrop(i);
+            Player player = model.getPlayer();
+            if(player.plant(new Flower(newCrop), model.getPlot(index)))
+                view.setFeedbackText("<html>Planted a " + newCrop.getName() + "<br/>Used " + newCrop.getCost() + " objectCoins!</html>");
+            else
+                view.setFeedbackText("<html>Cannot plant crop there!</html>");
+            model.setPlayer(player);
+            updateDisplay();
+            return true;
+        }
+        return false;
+    }
 }

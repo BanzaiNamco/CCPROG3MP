@@ -36,10 +36,12 @@ public class DistinguishedFarmer extends Player implements Upgradeable{
     }
     
     @Override
-    public void plant(Crop crop, Tile tile){
+    public boolean plant(Crop crop, Tile tile){
         if(tile.plant(crop)){
             useObjectCoins(crop.getCost() - seedCostReduction);
+            return true;
         }
+        return false;
     }
     public static int getLevelReq(){
         return 10;

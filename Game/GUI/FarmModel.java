@@ -23,18 +23,18 @@ public class FarmModel {
         0, 1, 0, 1, 0, 0, 0, 1, 0, 1,
         0, 0, 0, 0, 0, 0, 1, 0, 0, 0
     };
-    /*private ArrayList<Tool> tools;
-*/
     
     public FarmModel(String name) throws FileNotFoundException{
         player = new Farmer(name);
         this.plot = new ArrayList<Tile>();
         this.seedList = new ArrayList<Crop>();
+        this.toolList = new ArrayList<Tool>();
 
         for (int i = 0; i < 50; i++){
             plot.add(new Tile(plotMap[i]));
         }
         seedsInit();
+        toolsInit();
     }
     public Player getPlayer(){
         return player;
@@ -62,8 +62,11 @@ public class FarmModel {
         return false;
     }
 
+    public Tool getTool(int i){
+        return this.toolList.get(i);
+    }
+
     private void seedsInit() throws FileNotFoundException{
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         Scanner txtFileReader = new Scanner(new File("../items/seeds.txt")).useLocale(Locale.ENGLISH);
         txtFileReader.useDelimiter("-|\n");
         String cropType;
@@ -99,24 +102,11 @@ public class FarmModel {
         }   
         txtFileReader.close(); 
     }
-
-    /*public FarmModel(Player player, ArrayList<Tool> tools, ArrayList<Tile> plot){
-        this.player = player;
-        this.plot = new ArrayList<Tile>(plot); //create a map, max # of rocks, etc
-        this.tools = new ArrayList<Tool>(tools);
-
-        
-    }*/ 
-    /*private static void toolsInit(ArrayList<Tool> tools) throws FileNotFoundException{
-        Scanner txtFileReader = new Scanner(new File("items/tools.txt")).useLocale(Locale.ENGLISH);
-        txtFileReader.useDelimiter("-|\n");
-        while(txtFileReader.hasNext()){
-            String toolName = txtFileReader.next();
-            int useCost = txtFileReader.nextInt();
-            double exp = Double.valueOf(txtFileReader.next());
-            
-            tools.add(new Tool(toolName, useCost, exp));
-        }
-        txtFileReader.close();
-    }*/
+    private void toolsInit() throws FileNotFoundException{
+        toolList.add(new Plow(0, 0.5));
+        toolList.add(new WateringCan(0, 0.5));
+        toolList.add(new Fertilizer(10, 4));
+        toolList.add(new Pickaxe(50, 15));
+        toolList.add(new Shovel(7, 2));
+    }
 }

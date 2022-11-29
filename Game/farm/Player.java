@@ -47,10 +47,12 @@ public abstract class Player {
         return harvestTotal;
     }
     
-    public void plant(Crop crop, Tile tile){
+    public boolean plant(Crop crop, Tile tile){
         if(tile.plant(crop)){
             useObjectCoins(crop.getCost());
+            return true;
         }
+        return false;
     }
 
     protected double getFertilizerBonus(double harvestTotal, int timesFertilized, int fertLimit) {
@@ -79,28 +81,31 @@ public abstract class Player {
         return false;
     }
     
-    public void useTool(Tool tool, Tile tile){
+    public boolean useTool(Tool tool, Tile tile){
         if(tool.use(tile)){
             gainExp(tool.getExpOnUse());
             useObjectCoins(tool.getUseCost());
+            return true;
         }
         else{
             if(tool instanceof Shovel){
                 useObjectCoins(tool.getUseCost());
+                return true;
             }
         }
+        return false;
     }
 
     protected void addObjectCoins(double coins){
-        objectCoins += coins;
+        this.objectCoins += coins;
     }
 
     protected void useObjectCoins(double coins){
-        objectCoins -= coins;
+        this.objectCoins -= coins;
     }
 
     protected void gainExp(double exp){
-        exp += exp;
+        this.exp += exp;
     }
 
     public String getName() {
