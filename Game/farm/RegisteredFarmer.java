@@ -43,4 +43,23 @@ public class RegisteredFarmer extends Player implements Upgradeable{
     public static double getCost(){
         return 200;
     }
+
+    @Override
+    public Player upgrade2() {
+        if(getObjectCoins() >= 300 && getLevel() >= 10){
+            DistinguishedFarmer farmer = new DistinguishedFarmer(this);
+            return farmer;
+        }
+        return null;
+    }
+
+    @Override
+    public double getObjectCoinNeed() {
+        return 300 - getObjectCoinNeed();
+    }
+
+    @Override
+    public int getLevelNeed() {
+        return 10 - getLevel();
+    }
 }

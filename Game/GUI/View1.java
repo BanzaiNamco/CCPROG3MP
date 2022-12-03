@@ -23,20 +23,19 @@ public class View1 {
     private JFrame mainFrame;
     private JPanel topPanel;
     private JPanel leftPanel;
+    private JPanel rightPanel;
     private JPanel bigPanel;
     private GamePanel gamePanel;
     private ImagePanel imagePanel;
     private JLayeredPane smallPanel;
     private JPanel miniTopPanel1;
     private JPanel miniTopPanel2;
-    private JPanel miniTopPanel3;
 
     private JLabel playerName = new JLabel();
     private JLabel coins = new JLabel();
     private JLabel day = new JLabel();
     private JLabel level = new JLabel();
     private JLabel exp = new JLabel();
-    private ArrayList<JLabel> gameArea = new ArrayList<JLabel>();
     private JLabel feedbackText = new JLabel();
 
     private JButton advanceDay = new JButton();
@@ -49,6 +48,8 @@ public class View1 {
     private JButton sunflowerBtn = new JButton();
     private JButton mangoBtn = new JButton();
     private JButton appleBtn = new JButton();
+    private JButton harvestBtn = new JButton();
+    private JButton checkTileBtn = new JButton();
     
     private JButton plowBtn = new JButton();
     private JButton waterBtn = new JButton();
@@ -56,16 +57,12 @@ public class View1 {
     private JButton paxeBtn = new JButton();
     private JButton shovelBtn = new JButton();
     
-    private JButton adminPriv = new JButton(); //TODO DELETE
     public View1(){
         mainFrame = new JFrame("MyFarm");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(new Dimension(990, 650));
-
-        for(int i = 0; i < 50; i ++){
-            gameArea.add(new JLabel());
-            
-        }       
+        mainFrame.setResizable(false);
+        mainFrame.setLocationRelativeTo(null);    
         try {
             initPanels();
         } catch (IOException e) {
@@ -82,8 +79,8 @@ public class View1 {
         topPanel = new JPanel(new GridLayout());
         miniTopPanel1 = new JPanel();
         miniTopPanel2 = new JPanel();
-        miniTopPanel3 = new JPanel(new GridLayout());
-        leftPanel = new JPanel(new GridLayout(7, 2));
+        rightPanel = new JPanel(new GridLayout(8, 1));
+        leftPanel = new JPanel(new GridLayout(8, 1));
         imagePanel = new ImagePanel();
         gamePanel = new GamePanel();
         //gamePanel2 = new JPanel(); //TODO maybe make this into ANOTHER view? NOTE: this is for the seeds/plant layer
@@ -95,42 +92,34 @@ public class View1 {
         bigPanel.setLayout(new BorderLayout());
         bigPanel.setBounds(0,0,925,570);
         
-        gamePanel.setBackground(Color.red);
         imagePanel.setBackground(new Color(156,212,200));
         topPanel.setBackground(Color.decode("#DAB894"));
         leftPanel.setBackground(Color.decode("#DAB894"));
+        rightPanel.setBackground(Color.decode("#DAB894"));
         miniTopPanel1.setBackground(Color.decode("#DAB894"));
         miniTopPanel2.setBackground(Color.decode("#DAB894"));
-        miniTopPanel3.setBackground(Color.decode("#DAB894"));
 
         imagePanel.setBounds(0,0, 775, 465);
         gamePanel.setBounds(64, 64, 640, 320);
-        gamePanel.setOpaque(true);
+        gamePanel.setOpaque(false);
         
-        ImageIcon a = new ImageIcon("GUI/www/img/icons/All Icons.png");
-        for (int i = 0; i < 50; i++){
-            gameArea.get(i).setIcon(a);
-            gamePanel.add(gameArea.get(i));
-        }
         gamePanel.setPreferredSize(new Dimension(100, 100));
         topPanel.setPreferredSize(new Dimension(925, 150));
-        leftPanel.setPreferredSize(new Dimension(200, 390));
+        leftPanel.setPreferredSize(new Dimension(100, 390));
+        rightPanel.setPreferredSize(new Dimension(100, 390));
 
-        
-        farmerRegistration.setSize(200, 200);
         farmerRegistration.setText("Register");
-        advanceDay.setText("Advance Day");
+        advanceDay.setText("Sleep");
+        checkTileBtn.setText("Check Tile");
         miniTopPanel1.add(playerName);
         miniTopPanel1.add(day);
         miniTopPanel1.add(coins);
         miniTopPanel1.add(level);
         miniTopPanel1.add(exp);
+        miniTopPanel1.add(checkTileBtn);
         miniTopPanel2.add(feedbackText);
-        miniTopPanel3.add(farmerRegistration);
-        miniTopPanel3.add(advanceDay);
         topPanel.add(miniTopPanel1);
         topPanel.add(miniTopPanel2);
-        topPanel.add(miniTopPanel3);
 
         turnipBtn.setText("Turnip");
         carrotBtn.setText("Carrot");
@@ -145,8 +134,8 @@ public class View1 {
         fertBtn.setText("Fertilizer");
         paxeBtn.setText("Pickaxe");
         shovelBtn.setText("Shovel");
+        harvestBtn.setText("Harvest");
 
-        adminPriv.setText("NO"); //TODO DELETE
 
         leftPanel.add(turnipBtn);
         leftPanel.add(carrotBtn);
@@ -157,18 +146,23 @@ public class View1 {
         leftPanel.add(mangoBtn);
         leftPanel.add(appleBtn);
 
-        leftPanel.add(plowBtn);
-        leftPanel.add(waterBtn);
-        leftPanel.add(fertBtn);
-        leftPanel.add(paxeBtn);
-        leftPanel.add(shovelBtn);
-        leftPanel.add(adminPriv); //TODO DELETE
+        rightPanel.add(plowBtn);
+        rightPanel.add(waterBtn);
+        rightPanel.add(fertBtn);
+        rightPanel.add(paxeBtn);
+        rightPanel.add(shovelBtn);
+        rightPanel.add(harvestBtn);
+        rightPanel.add(advanceDay);
+        rightPanel.add(farmerRegistration);
+
+        
 
         smallPanel.add(imagePanel, Integer.valueOf(0));
         smallPanel.add(gamePanel, Integer.valueOf(1));
         bigPanel.add(smallPanel, BorderLayout.CENTER);
         bigPanel.add(topPanel, BorderLayout.NORTH);
         bigPanel.add(leftPanel, BorderLayout.WEST);
+        bigPanel.add(rightPanel, BorderLayout.EAST);
         
         mainFrame.add(bigPanel);
     }
@@ -181,17 +175,10 @@ public class View1 {
         feedbackText.setText(a);
     }
 
-    public void setAdminPriv(ActionListener e){
-        adminPriv.addActionListener(e);
+    public void setHarvestBtn(ActionListener e){
+        harvestBtn.addActionListener(e);
     }
-    public void setGameAreaMouseListener(MouseListener e, int i){
-        gameArea.get(i).addMouseListener(e);     
-    }
-
-    public void setGameAreaIcon(BufferedImage image, int i){
-        gameArea.get(i).setIcon((Icon) image);
-    }
-
+    
     public void setTurnipBtnActionListener(ActionListener e){
         turnipBtn.addActionListener(e);
     }
@@ -252,6 +239,10 @@ public class View1 {
         advanceDay.addActionListener(e);
     }
 
+    public void setCheckTileBtnActionListener(ActionListener e){
+        checkTileBtn.addActionListener(e);
+    }
+    
     public void setPlayerNameTxt(String txt){
         //TODO: Set font, size, arrange properly.
         playerName.setText(txt);
@@ -273,4 +264,11 @@ public class View1 {
         exp.setText(d + " exp");
     }
     
+    public void changeTileImg(int row, int col, boolean plowed){
+        imagePanel.update(row, col, plowed);
+    }
+
+    public void setGamePanelMouseListener(MouseListener e){
+        gamePanel.addMouseListener(e);
+    }
 }

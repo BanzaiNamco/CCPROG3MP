@@ -10,8 +10,11 @@ public class WateringCan extends Tool{
 
     @Override
     public boolean use(Tile tile) {
-        tile.getCrop().water();
-        return true;
+        if(tile.getCrop() != null){
+            tile.getCrop().water();
+            return true;
+        }
+        return false; 
     }
     
 }

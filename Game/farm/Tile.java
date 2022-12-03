@@ -43,4 +43,8 @@ public class Tile {
     public boolean getRock(){
         return this.rock;
     }
+
+    public boolean getPlowed(){
+        return this.plowed;
+    }
 }

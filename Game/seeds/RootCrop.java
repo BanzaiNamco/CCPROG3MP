@@ -18,6 +18,15 @@ public class RootCrop extends Crop implements BountifulHarvest{
     }
 
     @Override
+    public boolean update(){
+        if(super.update()){
+            produce = getRandomProduce();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public int getRandomProduce() {
         return ThreadLocalRandom.current().nextInt(produceMin, produceMax + 1);
     }

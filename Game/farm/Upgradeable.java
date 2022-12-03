@@ -13,4 +13,7 @@ public interface Upgradeable {
                 return new LegendaryFarmer(player);
         return player; 
     }       
+    public Player upgrade2();
+    public double getObjectCoinNeed();
+    public int getLevelNeed();
 }

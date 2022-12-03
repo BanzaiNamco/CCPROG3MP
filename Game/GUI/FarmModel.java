@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+import javax.lang.model.util.ElementScanner14;
+
 import farm.*;
 import seeds.*;
 import tools.*;
@@ -21,7 +23,7 @@ public class FarmModel {
         0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
         1, 0, 0, 0, 1, 1, 0, 0, 1, 0,
         0, 1, 0, 1, 0, 0, 0, 1, 0, 1,
-        0, 0, 0, 0, 0, 0, 1, 0, 0, 0
+        0, 0, 0, 0, 0, 0, 1, 0, 0, 0 //TODO turn this into file input
     };
     
     public FarmModel(String name) throws FileNotFoundException{
@@ -53,9 +55,11 @@ public class FarmModel {
     }
     public boolean checkStatus(){
         int ctr = 0;
-        for(int i = 0; i < plot.size(); i++){
-            if(plot.get(i).getCrop() != null && !plot.get(i).getCrop().getDead())
-                ctr++;
+        if(player.getObjectCoins() >= 5){
+            for(int i = 0; i < plot.size(); i++){
+                if(plot.get(i).getCrop() != null && !plot.get(i).getCrop().getDead())
+                    ctr++;
+            }
         }
         if (ctr > 0)
             return true;
@@ -64,6 +68,33 @@ public class FarmModel {
 
     public Tool getTool(int i){
         return this.toolList.get(i);
+    }
+
+    public int[] getPlotMap(){
+        int map[] = new int[plot.size()];
+        Tile temp;
+        Crop tempCrop;
+        for(int i = 0; i < plot.size(); i++){
+            temp = plot.get(i);
+            if(temp.getCrop() != null){
+                tempCrop = temp.getCrop();
+                if(tempCrop.getHarvestTime() == 0){
+                    //check instanceof
+                }
+                else if(tempCrop.getDead()){
+                    //set to dead
+                }
+                else{
+                    map[i] = 3;
+                }
+            }
+            else if(temp.getRock()){
+                map[i] = 2;
+            }
+            else
+                map[i] = 0;
+        }
+        return map;
     }
 
     private void seedsInit() throws FileNotFoundException{
@@ -92,7 +123,6 @@ public class FarmModel {
             cost = Double.valueOf(txtFileReader.next());
             bsp = txtFileReader.nextInt();
             exp = Double.valueOf(txtFileReader.next());
-
             switch(cropType){
                 case "RootCrop": seedList.add(new RootCrop(cropName, waterNeeds, fertNeeds, harvestTime, bsp, cost, exp, prodMin, prodMax)); break;
                 case "Tree": seedList.add(new Tree(cropName, waterNeeds, fertNeeds, harvestTime, bsp, cost, exp, prodMin, prodMax)); break;
@@ -102,7 +132,7 @@ public class FarmModel {
         }   
         txtFileReader.close(); 
     }
-    private void toolsInit() throws FileNotFoundException{
+    private void toolsInit(){
         toolList.add(new Plow(0, 0.5));
         toolList.add(new WateringCan(0, 0.5));
         toolList.add(new Fertilizer(10, 4));

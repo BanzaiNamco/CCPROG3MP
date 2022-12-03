@@ -9,11 +9,13 @@ public class Shovel extends Tool{
 
     @Override
     public boolean use(Tile tile) {
-        boolean a = tile.getCrop().getDead();
-        tile.resetTile();
-        if(a)
-            return false;
-        return true;
+        if(tile.getCrop() != null){
+            boolean a = tile.getCrop().getDead();
+            tile.resetTile();
+            if(!a)
+                return true;
+        }
+        return false;
     }
     
 }

@@ -48,9 +48,11 @@ public abstract class Player {
     }
     
     public boolean plant(Crop crop, Tile tile){
-        if(tile.plant(crop)){
-            useObjectCoins(crop.getCost());
-            return true;
+        if(objectCoins >= crop.getCost()){
+            if(tile.plant(crop)){
+                useObjectCoins(crop.getCost());
+                return true;
+            }   
         }
         return false;
     }
@@ -75,6 +77,7 @@ public abstract class Player {
                 double harvestTotal = getHarvestTotal(tile.getCrop());
                 addObjectCoins(harvestTotal);
                 gainExp(tile.getCrop().getExpYield());
+                tile.resetTile();
                 return true;
             }
         }
@@ -82,15 +85,17 @@ public abstract class Player {
     }
     
     public boolean useTool(Tool tool, Tile tile){
-        if(tool.use(tile)){
-            gainExp(tool.getExpOnUse());
-            useObjectCoins(tool.getUseCost());
-            return true;
-        }
-        else{
-            if(tool instanceof Shovel){
+        if(objectCoins >= tool.getUseCost()){
+            if(tool.use(tile)){
+                gainExp(tool.getExpOnUse());
                 useObjectCoins(tool.getUseCost());
                 return true;
+            }
+            else{
+                if(tool instanceof Shovel){
+                    useObjectCoins(tool.getUseCost());
+                    return true;
+                }
             }
         }
         return false;
