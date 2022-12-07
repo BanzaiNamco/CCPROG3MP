@@ -4,8 +4,8 @@ import farm.*;
 
 public class Fertilizer extends Tool{
 
-    public Fertilizer(double useCost, double exp) {
-        super(useCost, exp);
+    public Fertilizer(String name, double useCost, double exp) {
+        super(name, useCost, exp);
     }
 
     /**
@@ -16,8 +16,10 @@ public class Fertilizer extends Tool{
     @Override
     public boolean use(Tile tile) {
         if(tile.getCrop() != null){
-            tile.getCrop().fertilize();
-            return true;        
+            if(!tile.IsPlantDead() | tile.getTimeTilHarvest() != 0){
+                tile.fertilize();
+                return true;        
+            }
         }
         return false;
     }

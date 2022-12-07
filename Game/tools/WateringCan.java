@@ -4,15 +4,17 @@ import farm.*;
 
 public class WateringCan extends Tool{
 
-    public WateringCan(double useCost, double exp) {
-        super(useCost, exp);
+    public WateringCan(String name, double useCost, double exp) {
+        super(name, useCost, exp);
     }
 
     @Override
     public boolean use(Tile tile) {
         if(tile.getCrop() != null){
-            tile.getCrop().water();
-            return true;
+            if(!tile.IsPlantDead() || tile.getTimeTilHarvest() != 0){ //if not dead or not harvestable
+                tile.water();
+                return true;
+            }
         }
         return false; 
     }

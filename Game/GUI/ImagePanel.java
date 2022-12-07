@@ -12,13 +12,11 @@ import java.util.ArrayList;
 public class ImagePanel extends JPanel{
     private BufferedImage image;
     private ArrayList<BufferedImage> ground = new ArrayList<BufferedImage>();
-    private ArrayList<BufferedImage> plotImgs = new ArrayList<BufferedImage>();
     private int imageSize = 16;
     private int scale = 4;
     private int screenRows = 7;
     private int screenCols = 12;
     private int rows = 7;
-    private int cols = 11;
     private int map[][] = {
         {0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 14},
         {1 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 15},
@@ -74,9 +72,4 @@ public class ImagePanel extends JPanel{
 
         repaint();
     }
-
-    //Create draw() method
-    //add a setter/changer for the center pieces OR
-    //Create another class for the center pieces
-    //create another another class for the seeds
 }

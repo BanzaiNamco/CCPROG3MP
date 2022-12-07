@@ -1,19 +1,11 @@
 package farm;
 
 public interface Upgradeable {
-    public static Player upgrade(Player player){ 
-        if(player instanceof Farmer)
-            if(player.getLevel() >= 5 && player.getObjectCoins() >= 200)
-                return new RegisteredFarmer(player);
-        else if (player instanceof RegisteredFarmer)
-            if(player.getLevel() >= 10 && player.getObjectCoins() >= 300)
-                return new DistinguishedFarmer(player);
-        else if(player instanceof DistinguishedFarmer)
-            if(player.getLevel() >= 15 && player.getObjectCoins() >= 400)
-                return new LegendaryFarmer(player);
-        return player; 
-    }       
-    public Player upgrade2();
-    public double getObjectCoinNeed();
-    public int getLevelNeed();
+    /**
+     * This method checks if the player is eligible to upgrade into
+     * the next farmer type. If the player is eligible, a new instance of
+     * the upgraded player is made
+     * @return a new instance of the current object but as its subclass
+     */
+    public Player upgrade();
 }

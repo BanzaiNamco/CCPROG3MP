@@ -3,13 +3,13 @@ package tools;
 import farm.*;
 
 public class Plow extends Tool{
-    public Plow(double useCost, double exp){
-        super(useCost, exp);
+    public Plow(String name, double useCost, double exp){
+        super(name, useCost, exp);
     }
 
     @Override
     public boolean use(Tile tile) {
-        if(tile.plow())
+        if(tile.changePlowStatus())
             return true;
         return false;
     }

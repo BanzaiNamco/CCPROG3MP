@@ -10,10 +10,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel{ //TODO FIND WITHERED ART
     private BufferedImage image;
     private ArrayList<BufferedImage> tileImg = new ArrayList<BufferedImage>();
     private int imageSize = 16;
@@ -22,11 +20,11 @@ public class GamePanel extends JPanel{
     private int screenCols = 10;
     private int map[] = 
     {
-        2,2,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
-        0,2,3,4,5,6,7,8,9,10,
         0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,11
     };
 
 
@@ -35,33 +33,35 @@ public class GamePanel extends JPanel{
     }
     
     //0 - reg
-    //1 - plowed
+    //1 - seed
     //2 - rock
-    //3 - seed
-    //4 - harvestable turnip
-    //5 - harvestable carrot
-    //6 - harvestable potato
-    //7 - h rose
-    //8 - h tulip
-    //9 - h sunflower
+    //3 - h turnip
+    //4 - h carrot
+    //5 - harvestable potato
+    //6 - h rose
+    //7 - h tulip
+    //8 - h sunflower
+    //9 - apple tree
+    //10 - mango h
+    //11 - wither
     
     private void initImages() throws IOException{
         image = ImageIO.read(new File("GUI/www/img/tiles/grass_hill.png"));
         
         tileImg.add(image.getSubimage(0, 4 * imageSize, imageSize, imageSize));
-        image = ImageIO.read(new File("GUI/www/img/tiles/Tilled Dirt.png"));
-        tileImg.add(image.getSubimage(0, 0, imageSize, imageSize));
-        
-        tileImg.add(ImageIO.read(new File("GUI/www/img/rock.png")));
+        image = ImageIO.read(new File("GUI/www/img/objects/Basic Grass Biom things 1.png"));
+        tileImg.add(image.getSubimage(8 * imageSize, imageSize, imageSize, imageSize));
+        tileImg.add(image.getSubimage(5 * imageSize, imageSize, imageSize, imageSize));
         tileImg.add(ImageIO.read(new File("GUI/www/img/turnip.png")));
         tileImg.add(ImageIO.read(new File("GUI/www/img/carrot.png")));
         tileImg.add(ImageIO.read(new File("GUI/www/img/potato.png")));
-        tileImg.add(ImageIO.read(new File("GUI/www/img/potato.png")));
-        tileImg.add(ImageIO.read(new File("GUI/www/img/flower_harvest_pink.png")));
-        tileImg.add(ImageIO.read(new File("GUI/www/img/flower_harvest_pink.png"))); //TODO TULIPS CHANGE COLOR
-        tileImg.add(ImageIO.read(new File("GUI/www/img/flower_harvest.png")));
-        image = ImageIO.read(new File("GUI/www/img/objects/Basic tools and meterials.png"));//TODO DELETE
-        tileImg.add(image.getSubimage(0, 0, imageSize, imageSize));
+        tileImg.add(image.getSubimage(7 * imageSize, 3 * imageSize, imageSize, imageSize));
+        tileImg.add(image.getSubimage(5 * imageSize, 3 * imageSize, imageSize, imageSize));
+        tileImg.add(image.getSubimage(7 * imageSize, 2 * imageSize, imageSize, imageSize));
+        tileImg.add(ImageIO.read(new File("GUI/www/img/Mango.png")));
+        tileImg.add(image.getSubimage(3 * imageSize, 0, imageSize * 2, imageSize * 2));
+        tileImg.add(ImageIO.read(new File("GUI/www/img/Dead.png")));
+
         
     }
 
@@ -77,18 +77,6 @@ public class GamePanel extends JPanel{
             }
         }
         g2d.dispose();
-    }
-
-    /*
-     * Not plowed = 1
-     * plowed = 0
-     */
-    public void setTileImage(int index, boolean plowed){
-        if(plowed)
-            map[index] = 0;
-        else
-            map[index] = 1;
-        
     }
 
     public void changeMapTile(int index, int status){

@@ -7,10 +7,12 @@ package tools;
 import farm.Tile;
 
 public abstract class Tool {
+    private String name;
     private double useCost;
     private double expOnUse;
 
-    public Tool(double useCost, double exp){
+    public Tool(String name, double useCost, double exp){
+        this.name = name;
         this.expOnUse = exp;
         this.useCost = useCost;
     }
@@ -26,6 +28,9 @@ public abstract class Tool {
      */
     public double getUseCost(){
         return this.useCost;
+    }
+    public String getName(){
+        return this.name;
     }
 
     public abstract boolean use(Tile tile);

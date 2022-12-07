@@ -4,8 +4,8 @@ import farm.Tile;
 
 public class Pickaxe extends Tool{
 
-    public Pickaxe(double useCost, double exp) {
-        super(useCost, exp);
+    public Pickaxe(String name, double useCost, double exp) {
+        super(name, useCost, exp);
     }
 
     @Override
