@@ -22,7 +22,7 @@ public class Tile {
 
     /**
      * Constructor that generates a new tile.
-     * @param rock integer representation of the presence of rock. The tile status is changed adjusted on this variable
+     * @param rock integer representation of the presence of rock. The tile status is changed adjusted on this variable.
      */
     public Tile(int rock){
         if(rock == 1)
@@ -38,35 +38,35 @@ public class Tile {
      * The plant is also declared dead if its harvest day has passed.
      */
     public void update(){
-        if(plant != null){
-            this.timeTilHarvest--;
+        if(plant != null){ 
+            this.timeTilHarvest--; //move forward by a day 
 
-            if(timeTilHarvest == 0){
-                if(timesWatered < plant.getWaterNeed() || timesFertilized < plant.getFertilizerNeed()){
-                    deadPlant = true;
+            if(timeTilHarvest == 0){ //harvestable?
+                if(timesWatered < plant.getWaterNeed() || timesFertilized < plant.getFertilizerNeed()){ //did not meet reqs?
+                    deadPlant = true; //dead
                 }
                 else{
-                    if(plant instanceof BountifulHarvestCrop)
+                    if(plant instanceof BountifulHarvestCrop) //get random # for produce
                         numOfProduce = ThreadLocalRandom.current().nextInt(((BountifulHarvestCrop)plant).getProduceMin(), ((BountifulHarvestCrop) plant).getProduceMax() + 1);
                     else
-                        numOfProduce = 1;
+                        numOfProduce = 1; 
                 }
             }
-            else if(timeTilHarvest < 0){
+            else if(timeTilHarvest < 0){ //past harvest date
                 deadPlant = true;
             }
         }
     }
 
     /**
-     * This method increments timesWatered
+     * This method increments timesWatered.
      */
     public void water(){
         timesWatered++;
     }
 
     /**
-     * This method increments timesFertilized
+     * This method increments timesFertilized.
      */
     public void fertilize(){
         timesFertilized++;
@@ -78,11 +78,11 @@ public class Tile {
      * If the tile has not been plowed, has a rock, or already has a plant, planting will not happen.
      * Otherwise, {@link farm.Tile#plant} is set to seed and the corresponding plant variables in this class
      * are adjusted.
-     * @param seed the {@link seeds.Crop} object to be planted into Tile
+     * @param seed the {@link seeds.Crop} object to be planted into Tile.
      * @return false if the Tile is not plowed, has a rock, or already has a plant. Otherwise true.
      */
     public boolean addCrop(Crop seed){
-        if(plant!=null || rock || !plowed){
+        if(plant!=null || rock || !plowed){ //no plant or has rock or not plowed
             return false;
         }
         this.plant = seed;
@@ -96,7 +96,7 @@ public class Tile {
      * This method checks if the Tile can be plowed. This means
      * the tile should not be plowed and have no plant or rock.
      * If the check returns true, then {@link farm.Tile#plowed} is set to true.
-     * @return true if tile was plowed, false otherwise
+     * @return true if tile was plowed, false otherwise.
      */
     public boolean changePlowStatus(){
         if(!plowed && plant == null && !rock){
@@ -108,7 +108,7 @@ public class Tile {
 
     /**
      * This method resets all variables to its default values.
-     * {@link farm.Tile#rock} is always set to false.
+     * {@link farm.Tile#rock} is always set to false here.
      */
     public void resetTile(){
         plant = null;
@@ -121,72 +121,72 @@ public class Tile {
     }
 
     /**
-     * Gets the {@link seeds.Crop} object stored in this class
-     * @return {@link seeds.Crop} object stored in this class
+     * Gets the {@link seeds.Crop} object stored in this class.
+     * @return {@link seeds.Crop} object stored in this class.
      */
     public Crop getCrop(){
         return this.plant;
     }
 
     /**
-     * Gets the presence status of the rock in the tile
-     * @return the presence status of the rock in the tile
+     * Gets the presence status of the rock in the tile.
+     * @return the presence status of the rock in the tile.
      */
     public boolean getRock(){
         return this.rock;
     }
 
     /**
-     * Gets the tile plowed status
-     * @return tile plowed status
+     * Gets the tile plowed status.
+     * @return tile plowed status.
      */
     public boolean getPlowed(){
         return this.plowed;
     }
 
     /**
-     * Gets the number of days until the plant can be harvested
-     * @return number of days until the plant can be harvested
+     * Gets the number of days until the plant can be harvested.
+     * @return number of days until the plant can be harvested.
      */
     public int getTimeTilHarvest(){
         return timeTilHarvest;
     }
 
     /**
-     * Gets the number of products the plant was able to produce
-     * @return the number of products the plant was able to produce
+     * Gets the number of products the plant was able to produce.
+     * @return the number of products the plant was able to produce.
      */
     public int getNumOfProduce(){
         return numOfProduce;
     }
 
     /**
-     * Gets the plant dead status
-     * @return the plant dead status
+     * Gets the plant dead status.
+     * @return the plant dead status.
      */
     public boolean IsPlantDead(){
         return deadPlant;
     }
 
     /**
-     * Gets the number of times the tile has been watered
-     * @return the number of times the tile has been watered
+     * Gets the number of times the tile has been watered.
+     * @return the number of times the tile has been watered.
      */
     public int getTimesWatered(){
         return timesWatered;
     }
 
     /**
-     * Gets the number of times the tile has been fertilized
-     * @return the number of times the tile has been fertilized
+     * Gets the number of times the tile has been fertilized.
+     * @return the number of times the tile has been fertilized.
      */
     public int getTimesFertilized(){
         return timesFertilized;
     }
 
     /**
-     * Checks if the tile does not have a plant or rock
-     * @return true if there is not plant or rock. False otherwise
+     * Checks if the tile does not have a plant or rock.
+     * @return true if there is not plant or rock. False otherwise.
      */
     public boolean isEmpty(){
         if(plant == null && !rock)

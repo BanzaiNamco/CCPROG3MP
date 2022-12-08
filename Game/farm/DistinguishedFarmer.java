@@ -3,7 +3,6 @@ package farm;
 /**
  * This class represents a Distinguished Farmer.
  * <p>
- * This class extends {@link farm.RegisteredFarmer}.
  * This class introduces adds a new variable bonusWater.
  * Values of the variables in {@link farm.RegisteredFarmer} are changed.
  */
@@ -14,8 +13,8 @@ public class DistinguishedFarmer extends RegisteredFarmer{
      * Constructor method that creates a new DistinguishedFarmer object derived from a {@link farm.RegisteredFarmer} object.
      * <p>
      * This constructor changes the variables in {@link farm.RegisteredFarmer} and further deducts the player's object coins
-     * after calling super()
-     * @param farmer
+     * after calling super().
+     * @param farmer {@link farm.RegisteredFarmer} object to be turned into this class.
      */
     protected DistinguishedFarmer(RegisteredFarmer farmer) {
         super(farmer);
@@ -25,7 +24,9 @@ public class DistinguishedFarmer extends RegisteredFarmer{
         bonusWater = 1;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * @return a {@link farm.LegendaryFarmer} object derived from this object if upgrade is possible. Null otherwise.
+    */
     @Override
     public Player upgrade(){
         if(getObjectCoins() >= 400 & getLevel() >= 15){

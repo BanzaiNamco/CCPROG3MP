@@ -4,16 +4,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 
 import farm.*;
 import seeds.*;
-
+/**
+ * This class is the controller for the GUI
+ */
 public class FarmController {
     private FarmModel model;
-    private View1 view;
+    private FarmView view;
     private int selectedTile = -1;
     
-    public FarmController(FarmModel model, View1 view){
+    /**
+     * Creates a new FarmController object.
+     * @param model {@link GUI.FarmModel} object that will be used for the game.
+     * @param view {@link GUI.FarmView} object that will be used for the game.
+     */
+    public FarmController(FarmModel model, FarmView view){
         this.view = view;
         this.model = model;
         
@@ -24,6 +32,9 @@ public class FarmController {
         
     }
 
+    /**
+     * This method updates all text displays on screen.
+     */
     private void updateDisplay(){
         view.setLevelUpTxt(null);
         if(model.playerUpdate())
@@ -46,6 +57,10 @@ public class FarmController {
             view.setFarmerTypeTxt("Farmer");
         
     }
+
+    /**
+     * This method updates all the images in {@link GUI.FarmView} based on the status of the game from {@link GUI.FarmModel}.
+     */
     private void updateTileImg(){
         int plot[] = model.getPlotMap();
         for(int i = 0; i < plot.length; i++){
@@ -55,6 +70,10 @@ public class FarmController {
             view.getGamePanel().changeMapTile(i, plot[i]);
         }
     }
+
+    /**
+     * This method updates the display text for the selected tile.
+     */
     private void updateTileDisplayTxt(){
         if(selectedTile != -1){
             if(model.getPlot(selectedTile).getCrop() != null){
@@ -80,6 +99,9 @@ public class FarmController {
         }
     }
     
+    /**
+     * This method sets all the buttons in {@link GUI.FarmView}.
+     */
     private void setButtons(){
         view.setTurnipBtnActionListener(new ActionListener(){
             @Override
@@ -129,7 +151,6 @@ public class FarmController {
                 plantSeed(7);
             }
         });
-        //TODO trees
         view.setPlowBtnActionListener(new ActionListener(){
 
             @Override
@@ -199,10 +220,31 @@ public class FarmController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!model.advanceDay()){
-                    view.endGame();
+                    updateDisplay();
+                    if(view.endGame() == 0){
+                        try{
+                            String name = model.getPlayer().getName();
+                            model = new FarmModel(name);
+                        }
+                        catch (FileNotFoundException e1){
+                            e1.printStackTrace();
+                        }
+                        view.closeGame();
+                        view = new FarmView();
+                        view.setPlayerNameTxt(model.getPlayer().getName());
+                        selectedTile = -1;
+                        view.setFeedbackText(null);
+                        setButtons();
+                        updateDisplay();
+                    }
+                    else{
+                        System.out.println("1");
+                        view.closeGame();
+                    }
                 }
                 else
                     view.setFeedbackText("Advanced to next day!");
+                selectedTile = -1;
                 updateDisplay();
             }
 
@@ -215,11 +257,19 @@ public class FarmController {
                 if(selectedTile != -1){
                     int prod = model.getPlot(selectedTile).getNumOfProduce();
                     Crop crop = model.getPlot(selectedTile).getCrop();
-                    double harvestTotal = model.getHarvestTotal(selectedTile);
-                    if(model.harvest(selectedTile))
-                        view.setFeedbackText("<html>Sold " + prod + " " 
-                            +  crop.getName() + "s!.<br/>Got " + crop.getExpYield() + " exp!<br/> Got " + harvestTotal + " object coins!</html>");
+                    if(crop != null){
+                        double harvestTotal = model.getHarvestTotal(selectedTile);
+                        if(model.harvest(selectedTile))
+                            view.setFeedbackText("<html>Sold " + prod + " " 
+                                +  crop.getName() + "s!.<br/>Got " + crop.getExpYield() + " exp!<br/> Got " + harvestTotal + " object coins!</html>");
+                        else
+                            view.setFeedbackText("Harvesting failed!");
+                    }
+                    else
+                        view.setFeedbackText("Harvesting failed!");
                 }
+                else
+                    view.setFeedbackText("Please select a tile!");
                 selectedTile = -1;
                 updateDisplay();
             }
@@ -236,7 +286,7 @@ public class FarmController {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(MouseEvent e) { //not necessary but makes the game more responsive to clicks
                 int selectedTileCol = (int) Math.ceil(e.getX()/64);
                 int selectedTileRow = (int) Math.ceil(e.getY()/64);
                 selectedTile = selectedTileRow * 10 + selectedTileCol;
@@ -245,26 +295,21 @@ public class FarmController {
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
+            public void mouseReleased(MouseEvent e) {}
 
             @Override
-            public void mouseEntered(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
+            public void mouseEntered(MouseEvent e) {}
 
             @Override
-            public void mouseExited(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
-            }
+            public void mouseExited(MouseEvent e) {}
 
             });
     }
 
+    /**
+     * This method calls {@link GUI.FarmModel#useTool(int, int)} if a tile has been selected and updates the display text accordingly.
+     * @param i
+     */
     private void useTool(int i){
         String display = "<html>Please select a tile!</html>";
         if(selectedTile != -1){
@@ -273,12 +318,19 @@ public class FarmController {
                 display = "<html>Used  " + model.getTool(i).getName() + " on Tile " + selected + "! <br/>Used " + model.getTool(i).getUseCost() +
                                     " objectCoins!<br/>Got " + model.getTool(i).getExpOnUse() + " exp!</html>";
             }
+            else if(model.getPlayer().getObjectCoins() < model.getTool(i).getUseCost())
+                display = "<html>Not enough object coins to use " + model.getTool(i).getName() + "!</html>";
             else
-                display = "<html>Cannot use" + model.getTool(i).getName() + " there!</html>";
+                display = "<html>Cannot use " + model.getTool(i).getName() + " there!</html>";
         }
         view.setFeedbackText(display);
         updateDisplay();
     }
+
+    /**
+     * This method calls {@link GUI.FarmModel#plant(int, int)} if a tile is selected and updates the display accordingly.
+     * @param i
+     */
     private void plantSeed(int i){
         String display = "<html>Please select a tile!</html>";
         if(selectedTile != -1){
@@ -289,6 +341,8 @@ public class FarmController {
                 display = "<html>Planted a " + crop.getName() + "!<br/>Used " + coins + " object coins!</html>";
                 updateDisplay();
             }
+            else if(model.getPlayer().getObjectCoins() < model.getCrop(i).getCost())
+                display = "<html>Not enough object coins to plant " + model.getCrop(i).getName() + "!</html>";
             else{
                 display = "<html>Could not plant seed!</html>";
             }

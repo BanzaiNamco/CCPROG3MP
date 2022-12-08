@@ -5,7 +5,6 @@ import seeds.*;
 /**
  * This class represents a Registered Farmer.
  * <p>
- * This class extends {@link farm.Farmer}.
  * This class introduces the bonusEarn and seedCostReduction variables.
  */
 public class RegisteredFarmer extends Farmer{
@@ -16,7 +15,7 @@ public class RegisteredFarmer extends Farmer{
      * Constructor that creates a new RegisteredFarmer object derived from its superclass {@link farm.Farmer}.
      * <p>
      * Player object coins is deducted in this constructor.
-     * @param farmer object of the superclass to be upgraded into this class
+     * @param farmer {@link farm.Farmer} object to be turned into this class.
      */
     protected RegisteredFarmer(Farmer farmer){
         super(farmer);
@@ -26,7 +25,7 @@ public class RegisteredFarmer extends Farmer{
     }
     
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public boolean plant(Crop crop, Tile tile){
@@ -38,7 +37,7 @@ public class RegisteredFarmer extends Farmer{
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public int getSeedCostReduction() {
@@ -46,7 +45,7 @@ public class RegisteredFarmer extends Farmer{
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     @Override
     public int getBonusEarn(){
@@ -54,7 +53,7 @@ public class RegisteredFarmer extends Farmer{
     }
 
     /**
-     * {@inheritDoc}}
+     * @return a {@link farm.DistinguishedFarmer} object derived from this object if possible. Null otherwise.
      */
     @Override
     public Player upgrade() {

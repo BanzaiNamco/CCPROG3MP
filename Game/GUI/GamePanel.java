@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class GamePanel extends JPanel{ //TODO FIND WITHERED ART
+public class GamePanel extends JPanel{
     private BufferedImage image;
     private ArrayList<BufferedImage> tileImg = new ArrayList<BufferedImage>();
     private int imageSize = 16;

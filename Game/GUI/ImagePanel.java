@@ -32,8 +32,6 @@ public class ImagePanel extends JPanel{
         
         this.setDoubleBuffered(true);
         initImages();
-        
-
     }    
 
     @Override

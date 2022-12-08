@@ -3,7 +3,6 @@ package farm;
 /**
  * This class is the highest level in the Farmer Series.
  * <p>
- * This class extends {@link farm.DistinguishedFarmer}.
  * The bonusFert variable is introduced here.
  */
 public class LegendaryFarmer extends DistinguishedFarmer{
@@ -14,7 +13,7 @@ public class LegendaryFarmer extends DistinguishedFarmer{
      * <p>
      * This constructor deducts the player's object coins after calling super().
      * All the values of variables starting from {@link farm.RegisteredFarmer} are changed here.
-     * @param player
+     * @param player {@link farm.DistinguishedFarmer} object to be turned into this class.
      */
     protected LegendaryFarmer(DistinguishedFarmer player) {
         super(player);
@@ -26,8 +25,8 @@ public class LegendaryFarmer extends DistinguishedFarmer{
     }
 
     /**
-     * Gets the instance of this object
-     * @return this instance
+     * Gets the instance of this object.
+     * @return this instance.
      */
     @Override
     public Player upgrade(){
