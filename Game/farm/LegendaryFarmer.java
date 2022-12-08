@@ -1,61 +1,41 @@
 package farm;
 
-import seeds.BountifulHarvest;
-import seeds.Crop;
-import seeds.Flower;
+/**
+ * This class is the highest level in the Farmer Series.
+ * <p>
+ * The bonusFert variable is introduced here.
+ */
+public class LegendaryFarmer extends DistinguishedFarmer{
+    protected int bonusFert;
 
-public class LegendaryFarmer extends Player{
-    public static final int regFee = 400;
-    private final int bonusEarn = 4;
-    private final int seedCostReduction = 3;
-    private final int bonusWater = 2;
-    private final int bonusFert = 1;
-
-    public LegendaryFarmer(Player player) {
-        super(player, 400);
+    /**
+     * This constructor creates a LegendaryFarmer object derived from a {@link farm.DistinguishedFarmer} object.
+     * <p>
+     * This constructor deducts the player's object coins after calling super().
+     * All the values of variables starting from {@link farm.RegisteredFarmer} are changed here.
+     * @param player {@link farm.DistinguishedFarmer} object to be turned into this class.
+     */
+    protected LegendaryFarmer(DistinguishedFarmer player) {
+        super(player);
+        useObjectCoins(100);
+        bonusEarn = 4;
+        seedCostReduction = 3;
+        bonusWater = 2;
+        bonusFert = 1;
     }
 
+    /**
+     * Gets the instance of this object.
+     * @return this instance.
+     */
     @Override
-    protected double getFertilizerBonus(double harvestTotal, int timesFertilized, int fertLimit){
-        if(timesFertilized > fertLimit + bonusFert)
-            return harvestTotal * 0.5 * (fertLimit + bonusFert);
-        return harvestTotal * 0.5 * timesFertilized;
-    }   
-
-    @Override
-    protected double getWaterBonus(double harvestTotal, int timesWatered, int waterLimit){
-        if(timesWatered > waterLimit + bonusWater){
-            return harvestTotal * 0.2 * ((waterLimit + bonusWater) - 1);
-        }
-        return harvestTotal * 0.2 * timesWatered;
+    public Player upgrade(){
+        return this;
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected double getHarvestTotal(Crop crop){
-        double harvestTotal = 1;
-        if(crop instanceof BountifulHarvest){
-            harvestTotal = ((BountifulHarvest) crop).getRandomProduce();
-        }
-        harvestTotal *= (crop.getBaseSellingPrice() + bonusEarn);
-        double waterBonus = getWaterBonus(harvestTotal, crop.getTimesWatered(), crop.getWaterLimit());
-        double fertBonus = getFertilizerBonus(harvestTotal, crop.getTimesFertilized(), crop.getFertilizerLimit());
-        harvestTotal += waterBonus + fertBonus;
-        if(crop instanceof Flower)
-            harvestTotal *= 1.1;
-
-        return harvestTotal;
-    }
-    
-    @Override
-    public void plant(Crop crop, Tile tile){
-        if(tile.plant(crop)){
-            useObjectCoins(crop.getCost() - seedCostReduction);
-        }
-    }
-    public static int getLevelReq(){
-        return 15;
-    }
-    public static double getCost(){
-        return 400;
+    public int getBonusFert(){
+        return bonusFert;
     }
 }

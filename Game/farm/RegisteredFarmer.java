@@ -1,44 +1,66 @@
 package farm;
 
-import seeds.BountifulHarvest;
-import seeds.Crop;
-import seeds.Flower;
+import seeds.*;
 
-public class RegisteredFarmer extends Player{
-    private final int bonusEarn = 1;
-    private final int seedCostReduction = 1;
+/**
+ * This class represents a Registered Farmer.
+ * <p>
+ * This class introduces the bonusEarn and seedCostReduction variables.
+ */
+public class RegisteredFarmer extends Farmer{
+    protected int bonusEarn;
+    protected int seedCostReduction;
 
-    public RegisteredFarmer(Player farmer){
-        super(farmer, 200);
+    /**
+     * Constructor that creates a new RegisteredFarmer object derived from its superclass {@link farm.Farmer}.
+     * <p>
+     * Player object coins is deducted in this constructor.
+     * @param farmer {@link farm.Farmer} object to be turned into this class.
+     */
+    protected RegisteredFarmer(Farmer farmer){
+        super(farmer);
+        useObjectCoins(200);
+        bonusEarn = 1;
+        seedCostReduction = 1;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected double getHarvestTotal(Crop crop){
-        double harvestTotal = 1;
-        if(crop instanceof BountifulHarvest){
-            harvestTotal = ((BountifulHarvest) crop).getRandomProduce();
-        }
-        harvestTotal *= (crop.getBaseSellingPrice() + bonusEarn);
-        double waterBonus = getWaterBonus(harvestTotal, crop.getTimesWatered(), crop.getWaterLimit());
-        double fertBonus = getFertilizerBonus(harvestTotal, crop.getTimesFertilized(), crop.getFertilizerLimit());
-        harvestTotal += waterBonus + fertBonus;
-        if(crop instanceof Flower)
-            harvestTotal *= 1.1;
-
-        return harvestTotal;
-    }
-    
-    @Override
-    public void plant(Crop crop, Tile tile){
-        if(tile.plant(crop)){
+    public boolean plant(Crop crop, Tile tile){
+        if(tile.addCrop(crop)){
             useObjectCoins(crop.getCost() - seedCostReduction);
+            return true;
         }
+        return false;
     }
 
-    public static int getLevelReq(){
-        return 5;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSeedCostReduction() {
+        return seedCostReduction;
     }
-    public static double getCost(){
-        return 200;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBonusEarn(){
+        return bonusEarn;
+    }
+
+    /**
+     * @return a {@link farm.DistinguishedFarmer} object derived from this object if possible. Null otherwise.
+     */
+    @Override
+    public Player upgrade() {
+        if(getObjectCoins() >= 300 && getLevel() >= 10){
+            Player newPlayer = new DistinguishedFarmer(this);
+            return newPlayer;
+        }
+        return null;
     }
 }

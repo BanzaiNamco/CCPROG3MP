@@ -1,8 +1,8 @@
-Turnip-RootCrop-2-1-0-1-2-5-6-5
-Carrot-RootCrop-3-1-0-1-2-10-9-7.5
-Potato-RootCrop-5-3-1-1-10-20-3-12.5
-Rose-Flower-1-1-0-1-1-5-5-2.5
-Tulips-Flower-2-2-0-1-1-10-9-5
-Sunflower-Flower-3-2-1-1-1-20-19-7.5
-Mango-FruitTree-10-7-4-5-15-100-8-25
-Apple-FruitTree-10-7-5-10-15-200-5-25
+RootCrop-Turnip-2-1-0-1-2-5-6-5
+RootCrop-Carrot-3-1-0-1-2-10-9-7.5
+RootCrop-Potato-5-3-1-1-10-20-3-12.5
+Flower-Rose-1-1-0-5-5-2.5
+Flower-Tulip-2-2-0-10-9-5
+Flower-Sunflower-3-2-1-20-19-7.5
+Tree-Mango-10-7-4-5-15-100-8-25
+Tree-Apple-10-7-5-10-15-200-5-25

@@ -2,7 +2,6 @@ package GUI;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -18,33 +17,26 @@ public class ImagePanel extends JPanel{
     private int screenRows = 7;
     private int screenCols = 12;
     private int rows = 7;
-    private int cols = 11;
     private int map[][] = {
         {0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 14},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
-        {1 ,8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 15},
+        {1 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 15},
+        {1 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 15},
+        {1 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 15},
+        {1 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 15},
+        {1 ,5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 15},
         {2, 9, 9, 9 ,9 ,9 ,9 ,9 ,9 ,9, 9, 16},
     };
     
 
-    public ImagePanel(){
-        try {
-            image = ImageIO.read(new File("GUI/www/img/tiles/grass_hill.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        this.setPreferredSize(new Dimension(420, 420));
-
+    public ImagePanel() throws IOException{
+        
+        this.setDoubleBuffered(true);
         initImages();
     }    
 
     @Override
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-
 
         super.paint(g2d);
 
@@ -56,17 +48,26 @@ public class ImagePanel extends JPanel{
         g2d.dispose();
     }
 
-    private void initImages(){
-
-        for(int i = 0 ; i < cols; i++){
+    private void initImages() throws IOException{
+        image = ImageIO.read(new File("GUI/www/img/tiles/grass_hill.png"));
+        for(int i = 0 ; i < 3; i++){
             for (int j = 0; j < rows; j++){
                 ground.add(image.getSubimage(i * imageSize, j * imageSize, imageSize, imageSize));
             }        
         }
+        image = ImageIO.read(new File("GUI/www/img/tiles/Tilled Dirt.png"));
+        ground.add(image.getSubimage(0, 0, imageSize, imageSize));
     }
 
-    //Create draw() method
-    //add a setter/changer for the center pieces OR
-    //Create another class for the center pieces
-    //create another another class for the seeds
+    //used to change the tile from grass to plot or otherwise
+    public void update(int row, int col, boolean plowed){
+        row++;
+        col++;
+        if(plowed)
+            map[row][col] = 21;
+        else
+            map[row][col] = 5;
+
+        repaint();
+    }
 }
