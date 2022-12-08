@@ -2,8 +2,17 @@ package tools;
 
 import farm.*;
 
+/**
+ * This class represents the Fertlilizer tool and extends from {@link tools.Tool}
+ */
 public class Fertilizer extends Tool{
 
+    /**
+     * Constructor for this class
+     * @param name name of the Tool
+     * @param useCost cost of using the tool
+     * @param exp amount of exp earned from using the tool
+     */
     public Fertilizer(String name, double useCost, double exp) {
         super(name, useCost, exp);
     }
