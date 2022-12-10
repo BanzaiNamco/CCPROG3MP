@@ -9,18 +9,18 @@ import tools.*;
  * Objects of this class have a name, level, exp, and currency called object coins.
  */
 public abstract class Player {
-    private final String name;
+    private final String NAME;
     private int level;
-    private float exp;
-    private float objectCoins;
+    private double exp;
+    private double objectCoins;
 
     /**
-     * Constructor of the class that creates an object with default values.
+     * Constructor of the class that creates a Player object with default values.
      * @param name the name of the player.
      */
     protected Player(String name){
-        this.name = name;
-        this.objectCoins = 100;//TODO ADJUST
+        this.NAME = name;
+        this.objectCoins = 1000;//TODO ADJUST
         this.level = 15;
         this.exp = 1500;
     }
@@ -30,7 +30,7 @@ public abstract class Player {
      * @param player the Player object to be copied.
      */
     protected Player(Player player){
-        this.name = player.getName();
+        this.NAME = player.getName();
         this.objectCoins = player.getObjectCoins();
         this.level = player.getLevel();
         this.exp = player.getExp();
@@ -107,7 +107,8 @@ public abstract class Player {
      * @param coins amount of object coins to be added.
      */
     public void addObjectCoins(double coins){
-        this.objectCoins += coins;
+        this.objectCoins+=coins;
+        this.objectCoins = Math.round(this.objectCoins*100.0) / 100.0;
     }
 
     /**
@@ -116,6 +117,7 @@ public abstract class Player {
      */
     public void useObjectCoins(double coins){
         this.objectCoins -= coins;
+        this.objectCoins = Math.round(this.objectCoins*100.0) / 100.0;
     }
 
     /**
@@ -131,14 +133,14 @@ public abstract class Player {
      * @return player's name.
      */
     public String getName() {
-        return this.name;
+        return this.NAME;
     }
 
     /**
      * Gets the player's object coin count.
      * @return player's object coin count.
      */
-    public float getObjectCoins() {
+    public double getObjectCoins() {
         return this.objectCoins;
     }
 
@@ -154,7 +156,7 @@ public abstract class Player {
      * Gets the player's exp.
      * @return player's exp.
      */
-    public float getExp(){
+    public double getExp(){
         return this.exp;
     }
 }

@@ -21,7 +21,9 @@ public class Tile {
     private boolean deadPlant = false;
 
     /**
-     * Constructor that generates a new tile.
+     * Constructor that creates a new Tile object.
+     * <p>
+     * The rock status of the tile is set here.
      * @param rock integer representation of the presence of rock. The tile status is changed adjusted on this variable.
      */
     public Tile(int rock){

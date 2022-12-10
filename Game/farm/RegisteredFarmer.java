@@ -8,7 +8,13 @@ import seeds.*;
  * This class introduces the bonusEarn and seedCostReduction variables.
  */
 public class RegisteredFarmer extends Farmer{
+    /**
+     * This is the amount of bonus earnings per produce the farmer will earn.
+     * */
     protected int bonusEarn;
+    /**
+     * This is the amount of coins the player will have to spend less when buying seeds.
+     */
     protected int seedCostReduction;
 
     /**
@@ -62,5 +68,21 @@ public class RegisteredFarmer extends Farmer{
             return newPlayer;
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getObjectCoinNeed(){
+        return 300;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevelNeed(){
+        return 10;
     }
 }

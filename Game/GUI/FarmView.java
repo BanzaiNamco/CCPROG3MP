@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -95,10 +96,8 @@ public class FarmView {
         imagePanel.setBounds(0,0, 775, 465);
         gamePanel.setBounds(64, 64, 640, 320);
         gamePanel.setOpaque(false);
-        
         makeTextFancy();
         setPreferredSizes();
-        setAllButtonTxt();
         addToTopPanel();
         addLeftPanelBtns();
         addRightPanelBtns();
@@ -150,24 +149,47 @@ public class FarmView {
         miniTopPanel1.setBackground(Color.decode("#DAB894"));
         miniTopPanel2.setBackground(Color.decode("#DAB894"));
     }
+    public void setFarmerRegistrationBtnTxt(int lvl, int coins){
+        if(lvl != 0 && coins !=0)
+            farmerRegistration.setText("<html>Register<br/><small>Cost: " + coins + " Lvl: " + lvl + "</small></html>");
+        else
+            farmerRegistration.setText("Maxed out!");
+
+    }
     //dump for all btn.setText()
-    private void setAllButtonTxt(){
-        farmerRegistration.setText("Register");
+    public void setAllButtonTxt(int list[], int list2[], int lvl, int coins){
+        farmerRegistration.setText("<html>Register<br/><small>Cost: " + coins + " Lvl: " + lvl + "</small></html>");
+        farmerRegistration.setFocusable(false);
         advanceDay.setText("Sleep");
-        turnipBtn.setText("Turnip");
-        carrotBtn.setText("Carrot");
-        potatoBtn.setText("Potato");
-        roseBtn.setText("Rose");
-        tulipsBtn.setText("Tulip");
-        sunflowerBtn.setText("Sunflower");
-        mangoBtn.setText("Mango");
-        appleBtn.setText("Apple");
-        plowBtn.setText("Plow");
-        waterBtn.setText("Water");
-        fertBtn.setText("Fertilizer");
-        paxeBtn.setText("Pickaxe");
-        shovelBtn.setText("Shovel");
+        advanceDay.setFocusable(false);
+        turnipBtn.setText("<html>Turnip<br/><small>Cost: " + list[0] + "</small></html>");
+        turnipBtn.setFocusable(false);
+        carrotBtn.setText("<html>Carrot<br/><small>Cost: " + list[1] + "</small></html>");
+        carrotBtn.setFocusable(false);
+        potatoBtn.setText("<html>Potato<br/><small>Cost: " + list[2] + "</small></html>");
+        potatoBtn.setFocusable(false);
+        roseBtn.setText("<html>Rose<br/><small>Cost: " + list[3] + "</small></html>");
+        roseBtn.setFocusable(false);
+        tulipsBtn.setText("<html>Tulip<br/><small>Cost: " + list[4] + "</small></html>");
+        tulipsBtn.setFocusable(false);
+        sunflowerBtn.setText("<html>Sunflower<br/><small>Cost: " + list[5] + "</small></html>");
+        sunflowerBtn.setFocusable(false);
+        mangoBtn.setText("<html>Mango<br/><small>Cost: " + list[6] + "</small></html>");
+        mangoBtn.setFocusable(false);
+        appleBtn.setText("<html>Apple<br/><small>Cost: " + list[7] + "</small></html>");
+        appleBtn.setFocusable(false);
+        plowBtn.setText("<html>Plow<br/><small>Cost: " + list2[0] + "</small></html>");
+        plowBtn.setFocusable(false);
+        waterBtn.setText("<html>Water<br/><small>Cost: " + list2[1] + "</small></html>");
+        waterBtn.setFocusable(false);
+        fertBtn.setText("<html>Fertilizer<br/><small>Cost: " + list2[2] + "</small></html>");
+        fertBtn.setFocusable(false);
+        paxeBtn.setText("<html>Pickaxe<br/><small>Cost: " + list2[3] + "</small></html>");
+        paxeBtn.setFocusable(false);
+        shovelBtn.setText("<html>Shovel<br/><small>Cost: " + list2[4] + "</small></html>");
+        shovelBtn.setFocusable(false);
         harvestBtn.setText("Harvest");
+        harvestBtn.setFocusable(false);
     }
     //add all components to leftPanel
     private void addLeftPanelBtns(){
@@ -254,13 +276,13 @@ public class FarmView {
     public void setDayTxt(int day2){
         day.setText("Day " + day2);
     }
-    public void setCoinsTxt(float d){
+    public void setCoinsTxt(double d){
         coins.setText(d + " objectCoins");
     }
     public void setLevelTxt(int i){
         level.setText("Level " + i);
     }
-    public void setExpTxt(float d){
+    public void setExpTxt(double d){
         exp.setText(d + " exp");
     }
     public void setSelectedTileTxt(String s){

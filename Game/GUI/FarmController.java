@@ -29,13 +29,24 @@ public class FarmController {
         updateDisplay();
 
         setButtons();
-        
+        setButtonTxt();
     }
-
+    private void setButtonTxt(){
+        int costList[] = new int[8];
+        int toolCostList[] = new int[5];
+        for (int i = 0; i < 8; i++){
+            costList[i] = (int) model.getCrop(i).getCost();
+        }
+        for(int i = 0; i < 5; i++){
+            toolCostList[i] = (int) model.getTool(i).getUseCost();
+        }
+        view.setAllButtonTxt(costList, toolCostList, ((Upgradeable)model.getPlayer()).getLevelNeed(), ((Upgradeable)model.getPlayer()).getObjectCoinNeed());
+    }
     /**
      * This method updates all text displays on screen.
      */
     private void updateDisplay(){
+        view.setFarmerRegistrationBtnTxt(((Upgradeable)model.getPlayer()).getLevelNeed(), ((Upgradeable)model.getPlayer()).getObjectCoinNeed());
         view.setLevelUpTxt(null);
         if(model.playerUpdate())
             view.setLevelUpTxt("Level up!");
@@ -191,7 +202,8 @@ public class FarmController {
                 String display = "<html>Please select a tile!</html>";
                 if(selectedTile != -1){
                     if(model.useTool(selectedTile, 4)){
-                            display = "<html>Used  shovel! <br/>Used " + model.getTool(4).getUseCost() + " objectCoins!";
+                            int tile = selectedTile+1;
+                            display = "<html>Used  shovel on tile " + tile + "!<br/>Used " + model.getTool(4).getUseCost() + " objectCoins!";
                         if(exp != model.getPlayer().getExp())
                             display += "<br/>Got " + model.getTool(4).getExpOnUse() + " exp!</html>";
                     }
@@ -235,10 +247,10 @@ public class FarmController {
                         selectedTile = -1;
                         view.setFeedbackText(null);
                         setButtons();
+                        setButtonTxt();
                         updateDisplay();
                     }
                     else{
-                        System.out.println("1");
                         view.closeGame();
                     }
                 }
@@ -338,7 +350,8 @@ public class FarmController {
             if(model.plant(selectedTile, i)){
                 Crop crop = model.getCrop(i);
                 coins -= model.getPlayer().getObjectCoins();
-                display = "<html>Planted a " + crop.getName() + "!<br/>Used " + coins + " object coins!</html>";
+                int tile = selectedTile+1;
+                display = "<html>Planted a " + crop.getName() + " on tile " + tile + "!<br/>Used " + coins + " object coins!</html>";
                 updateDisplay();
             }
             else if(model.getPlayer().getObjectCoins() < model.getCrop(i).getCost())

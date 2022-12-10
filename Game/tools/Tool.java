@@ -15,12 +15,12 @@ public abstract class Tool {
     private double expOnUse;
 
     /**
-     * Constructor for tools
+     * Creates a new Tool object.
      * @param name name of the tool
      * @param useCost cost of using the tool
      * @param exp exp gained from using the tool
      */
-    public Tool(String name, double useCost, double exp){
+    protected Tool(String name, double useCost, double exp){
         this.name = name;
         this.expOnUse = exp;
         this.useCost = useCost;
