@@ -72,10 +72,11 @@ public class FarmModel {
      * This method harvests the plant in the specified tile.
      * <p>
      * This method also calls {@link farm.Player#gainExp(double)}, {@link farm.Player#addObjectCoins(double)} and
-     * {@link farm.Tile#resetTile()} if the harvest is successful.
+     * {@link farm.Tile#resetTile()} if the harvest is successful. This method checks all relevant checks such as 
+     * if the {@link farm.Tile} object has a {@link seeds.Crop} object planted or not, and if it is harvestable.
      * 
-     * @param tileIndex
-     * @return
+     * @param tileIndex {@link farm.Tile} object where the harvest operation is to be done
+     * @return true if a plant was harvested, false otherwise
      */
     public boolean harvest(int tileIndex){
         if(plot.get(tileIndex).getCrop() != null){ //if plant is in tile
