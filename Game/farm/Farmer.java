@@ -33,6 +33,22 @@ public class Farmer extends Player implements Upgradeable{
         }
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getObjectCoinNeed(){
+        return 200;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevelNeed(){
+        return 5;
+    }
     /**
      * Gets the player's bonus earnings per produce.
      * @return the player's bonus earnings per produce.

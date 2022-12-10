@@ -23,7 +23,9 @@ public class FarmModel {
     private int[] plotMap;
 
     /**
-     * This constructor initializes the game to its start.
+     * Constructor that creates a new FarmModel object.
+     * <p>
+     * All variables are initialized here.
      * @param name name of the player.
      * @throws FileNotFoundException when the files containing vital game object stats are missing.
      */
@@ -84,9 +86,7 @@ public class FarmModel {
                 updatePlotMap(); //update plot map
                 return true;
             }
-            System.out.println("2");
         }
-        System.out.println("1");
         return false;
     }
 
@@ -169,16 +169,6 @@ public class FarmModel {
      * @return true if tool use was successful, false otherwise.
      */
     public boolean useTool(int plotIndex, int toolIndex){
-        if(plot.get(plotIndex).getCrop() != null){ //TODO could probably delete this
-            if(toolList.get(toolIndex) instanceof WateringCan){
-                if(plot.get(plotIndex).getTimesWatered() >= plot.get(plotIndex).getCrop().getWaterLimit() + ((Farmer)player).getBonusWater())
-                    return false;
-            }
-            else if(toolList.get(toolIndex) instanceof Fertilizer){
-                if(plot.get(plotIndex).getTimesFertilized() >= plot.get(plotIndex).getCrop().getFertilizerLimit() + ((Farmer)player).getBonusFert())
-                    return false;
-            }
-        }
         if(player.useTool(toolList.get(toolIndex), plot.get(plotIndex))){
             updatePlotMap();
             return true;
@@ -232,14 +222,6 @@ public class FarmModel {
      */
     public Tile getPlot(int i){
         return plot.get(i);
-    }
-
-    /**
-     * Gets the size/area of the game's plot.
-     * @return the size/area of the game's plot.
-     */
-    public int getPlotSize(){
-        return plot.size();
     }
 
     /**

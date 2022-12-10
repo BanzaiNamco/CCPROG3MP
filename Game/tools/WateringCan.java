@@ -8,7 +8,7 @@ import farm.*;
 public class WateringCan extends Tool{
 
     /**
-     * Constructor for this class.
+     * Creates a new WateringCan object.
      * @param name name of the tool.
      * @param useCost cost of using the tool.
      * @param exp exp gained form using the tool.

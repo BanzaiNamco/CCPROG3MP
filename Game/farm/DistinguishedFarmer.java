@@ -7,6 +7,9 @@ package farm;
  * Values of the variables in {@link farm.RegisteredFarmer} are changed.
  */
 public class DistinguishedFarmer extends RegisteredFarmer{
+    /**
+     * This is the amount that the water limit of a crop in the harvest calculations can be increased by.
+     */
     protected int bonusWater;
 
     /**
@@ -34,6 +37,22 @@ public class DistinguishedFarmer extends RegisteredFarmer{
             return newPlayer;
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getObjectCoinNeed(){
+        return 400;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevelNeed(){
+        return 15;
     }
 
     /** {@inheritDoc} */

@@ -5,7 +5,7 @@ package seeds;
  */
 public abstract class Crop {
     
-    private final String name;
+    private final String NAME;
     private int waterNeed;
     private int fertilizerNeed;
     private int waterLimit;
@@ -16,7 +16,9 @@ public abstract class Crop {
     private double expYield;
 
     /**
-     * Constructor for this class. {@link seeds.Crop#waterLimit} and {@link seeds.Crop#fertilizerLimit}
+     * Creates a new Crop object. 
+     * <p>
+     * {@link seeds.Crop#waterLimit} and {@link seeds.Crop#fertilizerLimit}
      * are calculated and set here.
      * @param name name of the crop.
      * @param waterNeed the minimum amount of water a crop needs to become harvestable.
@@ -27,7 +29,7 @@ public abstract class Crop {
      * @param expYield the amount of exp the player will gain for harvesting the crop.
      */
     public Crop(String name, int waterNeed, int fertNeed, int harvestTime, int bsp, double cost, double expYield){
-        this.name = name;
+        this.NAME = name;
         this.waterNeed = waterNeed;
         this.fertilizerNeed = fertNeed;
         this.harvestTime = harvestTime;
@@ -50,7 +52,7 @@ public abstract class Crop {
      * @return the name of the crop.
      */
     public String getName() {
-        return this.name;
+        return this.NAME;
     }
     /**
      * Gets the amount of days before the crop can be harvested.

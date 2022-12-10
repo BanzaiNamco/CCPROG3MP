@@ -5,7 +5,7 @@ package seeds;
 public class Flower extends Crop{    
 
     /**
-     * Creates a new Flower object
+     * Creates a new Flower object.
      * @param name name of the crop.
      * @param waterNeed the minimum amount of water a crop needs to become harvestable.
      * @param fertNeed the minimum amount of fertilizer a crop needs to become harvestable.

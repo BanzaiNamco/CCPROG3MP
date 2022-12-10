@@ -6,7 +6,7 @@ package seeds;
 public class RootCrop extends BountifulHarvestCrop{
 
     /**
-     * Creates a new RootCrop object
+     * Creates a new RootCrop object.
      * @param name name of the crop.
      * @param waterNeed the minimum amount of water a crop needs to become harvestable.
      * @param fertNeed the minimum amount of fertilizer a crop needs to become harvestable.

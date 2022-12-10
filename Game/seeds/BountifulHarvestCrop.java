@@ -9,7 +9,7 @@ public abstract class BountifulHarvestCrop extends Crop{
     private int produceMax;
 
     /**
-     * Constructor for this class.
+     * Creates a new BountifulHarvestCrop object.
      * @param name name of the crop.
      * @param waterNeed the minimum amount of water a crop needs to become harvestable.
      * @param fertNeed the minimum amount of fertilizer a crop needs to become harvestable.
@@ -20,7 +20,7 @@ public abstract class BountifulHarvestCrop extends Crop{
      * @param min the minimum amount of products the crop can make on harvest day.
      * @param max the maxmimum amount of products the crop can make on harvest day.
      */
-    public BountifulHarvestCrop(String name, int waterNeed, int fertNeed, int harvestTime, int bsp, double cost, double expYield, int min, int max) {
+    protected BountifulHarvestCrop(String name, int waterNeed, int fertNeed, int harvestTime, int bsp, double cost, double expYield, int min, int max) {
         super(name, waterNeed, fertNeed, harvestTime, bsp, cost, expYield);
         produceMin = min;
         produceMax = max;
