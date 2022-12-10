@@ -20,7 +20,7 @@ public interface Upgradeable {
      */
     public int getObjectCoinNeed();
     /**
-     * Gets the minimum level requirement to upgrade farmeer type.
+     * Gets the minimum level requirement to upgrade farmer type.
      * @return minimum level requirement to upgrade
      */
     public int getLevelNeed();
