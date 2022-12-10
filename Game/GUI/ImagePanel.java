@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package GUI;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;

@@ -1,13 +1,10 @@
 //Orrin Landon T. Uy S17 ID12111287
-/**
- * This class handles the information of a tool
- */
 package tools;
 
 import farm.Tile;
 
 /**
- * This abstract class serves as the base for all tools.
+ * This abstract class serves as the base for all Tool objects.
  */
 public abstract class Tool {
     private String name;

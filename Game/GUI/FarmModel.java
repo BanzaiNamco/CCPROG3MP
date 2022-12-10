@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package GUI;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -71,10 +72,11 @@ public class FarmModel {
      * This method harvests the plant in the specified tile.
      * <p>
      * This method also calls {@link farm.Player#gainExp(double)}, {@link farm.Player#addObjectCoins(double)} and
-     * {@link farm.Tile#resetTile()} if the harvest is successful.
+     * {@link farm.Tile#resetTile()} if the harvest is successful. This method checks all relevant checks such as 
+     * if the {@link farm.Tile} object has a {@link seeds.Crop} object planted or not, and if it is harvestable.
      * 
-     * @param tileIndex
-     * @return
+     * @param tileIndex {@link farm.Tile} object where the harvest operation is to be done
+     * @return true if a plant was harvested, false otherwise
      */
     public boolean harvest(int tileIndex){
         if(plot.get(tileIndex).getCrop() != null){ //if plant is in tile
@@ -237,15 +239,13 @@ public class FarmModel {
      * Checks if the game has any active/growing crops in the field.
      * @return true if there are active crops. False otherwise.
      */
-    private boolean checkStatus(){
+    public boolean checkStatus(){
         int ctr = 0;
-        if(player.getObjectCoins() >= 5){
-            for(int i = 0; i < plot.size(); i++){
-                if(plot.get(i).getCrop() != null) //Assumes that if a plot already has a plant, then there should be no rock and is plowed
-                    if(!plot.get(i).IsPlantDead()) //nested in order to avoid errors when plot crop is null
-                        ctr++;
+        for(int i = 0; i < plot.size(); i++){
+            if(plot.get(i).getCrop() != null) //Assumes that if a plot already has a plant, then there should be no rock and is plowed
+                if(!plot.get(i).IsPlantDead()) //nested in order to avoid errors when plot crop is null
+                    ctr++;
             }
-        }
         if (ctr > 0)
             return true; //game keeps going when there are active plants growing and/or not dead
         return false; //game ends when no alive plants are found
