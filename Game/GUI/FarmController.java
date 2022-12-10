@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package GUI;
 
 import java.awt.event.ActionEvent;
@@ -191,6 +192,8 @@ public class FarmController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 useTool(3);
+                if(model.getPlayer().getObjectCoins() <= 5)
+                    endGame();
             }
         });
 
@@ -207,9 +210,14 @@ public class FarmController {
                         if(exp != model.getPlayer().getExp())
                             display += "<br/>Got " + model.getTool(4).getExpOnUse() + " exp!</html>";
                     }
+                    else
+                        display = "<html>Not enough object coins to use shovel!</html>";
                 }
                 view.setFeedbackText(display);     
-                updateDisplay();               
+                updateDisplay();              
+                
+                if(model.getPlayer().getObjectCoins() < 5 && !model.checkStatus())
+                    endGame();
             }
         });
 
@@ -225,6 +233,9 @@ public class FarmController {
                 else
                     view.setFeedbackText("Upgrade failed!");
                 updateDisplay();
+
+                if(model.getPlayer().getObjectCoins() < 5 && !model.checkStatus())
+                    endGame();
             }
         });
         view.setAdvanceDayActionListener(new ActionListener(){
@@ -232,27 +243,7 @@ public class FarmController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!model.advanceDay()){
-                    updateDisplay();
-                    if(view.endGame() == 0){
-                        try{
-                            String name = model.getPlayer().getName();
-                            model = new FarmModel(name);
-                        }
-                        catch (FileNotFoundException e1){
-                            e1.printStackTrace();
-                        }
-                        view.closeGame();
-                        view = new FarmView();
-                        view.setPlayerNameTxt(model.getPlayer().getName());
-                        selectedTile = -1;
-                        view.setFeedbackText(null);
-                        setButtons();
-                        setButtonTxt();
-                        updateDisplay();
-                    }
-                    else{
-                        view.closeGame();
-                    }
+                    endGame();
                 }
                 else
                     view.setFeedbackText("Advanced to next day!");
@@ -318,6 +309,29 @@ public class FarmController {
             });
     }
 
+    private void endGame(){
+        updateDisplay();
+            if(view.endGame() == 0){
+                try{
+                    String name = model.getPlayer().getName();
+                    model = new FarmModel(name);
+                }
+                catch (FileNotFoundException e1){
+                    e1.printStackTrace();
+                }
+                view.closeGame();
+                view = new FarmView();
+                view.setPlayerNameTxt(model.getPlayer().getName());
+                selectedTile = -1;
+                view.setFeedbackText(null);
+                setButtons();
+                setButtonTxt();
+                updateDisplay();
+            }
+            else{
+                view.closeGame();
+            }
+    }
     /**
      * This method calls {@link GUI.FarmModel#useTool(int, int)} if a tile has been selected and updates the display text accordingly.
      * @param i

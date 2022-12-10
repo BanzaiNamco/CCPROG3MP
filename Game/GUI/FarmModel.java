@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package GUI;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -237,15 +238,13 @@ public class FarmModel {
      * Checks if the game has any active/growing crops in the field.
      * @return true if there are active crops. False otherwise.
      */
-    private boolean checkStatus(){
+    public boolean checkStatus(){
         int ctr = 0;
-        if(player.getObjectCoins() >= 5){
-            for(int i = 0; i < plot.size(); i++){
-                if(plot.get(i).getCrop() != null) //Assumes that if a plot already has a plant, then there should be no rock and is plowed
-                    if(!plot.get(i).IsPlantDead()) //nested in order to avoid errors when plot crop is null
-                        ctr++;
+        for(int i = 0; i < plot.size(); i++){
+            if(plot.get(i).getCrop() != null) //Assumes that if a plot already has a plant, then there should be no rock and is plowed
+                if(!plot.get(i).IsPlantDead()) //nested in order to avoid errors when plot crop is null
+                    ctr++;
             }
-        }
         if (ctr > 0)
             return true; //game keeps going when there are active plants growing and/or not dead
         return false; //game ends when no alive plants are found

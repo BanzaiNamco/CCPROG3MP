@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;

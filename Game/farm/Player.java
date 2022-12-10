@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package farm;
 
 import seeds.*;
@@ -20,9 +21,9 @@ public abstract class Player {
      */
     protected Player(String name){
         this.NAME = name;
-        this.objectCoins = 1000;//TODO ADJUST
-        this.level = 15;
-        this.exp = 1500;
+        this.objectCoins = 100;
+        this.level = 0;
+        this.exp = 0;
     }
 
     /**

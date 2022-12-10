@@ -1,3 +1,4 @@
+//Orrin Landon T. Uy ID12111287
 package seeds;
 /**
  * This class is the representation of a flower object.
